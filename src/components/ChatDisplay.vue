@@ -14,19 +14,22 @@ const props = withDefaults(defineProps<{
   targetUser: string,
   channel: string,
   typingSpeed?: number,
-  fontSize?: number
-  fontColor?: string
-  fontWeight?: string
+  fontSize?: number,
+  fontColor?: string,
+  fontWeight?: string,
+  messageDuration?: number,
 }>(), {
   typingSpeed: 50, // 預設打字速度
   fontSize: 12, // 預設字體大小
   fontColor: '#000000',
   fontWeight: 'normal',
+  messageDuration: 0, // 預設為 0秒 表示不清除
 })
 
 const fullSegments = ref<(string)[]>([])
 const displayedHtml = ref('')
 let typingInterval: number | undefined
+let clearMessageTimeout: number | undefined
 
 let client: tmi.Client
 
@@ -101,6 +104,14 @@ function startTypingEffect() {
       clearInterval(typingInterval)
     }
   }, props.typingSpeed)
+
+  if (props.messageDuration > 0) {
+    clearMessageTimeout && clearTimeout(clearMessageTimeout)
+
+    clearMessageTimeout = setTimeout(() => {
+      displayedHtml.value = ''
+    }, props.messageDuration * 1000)
+  }
 }
 
 function testTypingEffect() {

@@ -6,6 +6,7 @@
     :fontSize="fontSize"
     :fontColor="fontColor"
     :fontWeight="fontWeight"
+    :messageDuration="messageDuration"
   />
 </template>
 
@@ -20,6 +21,7 @@ const typingSpeed = ref(50);
 const fontSize = ref(12);
 const fontColor = ref('#000000')
 const fontWeight = ref('normal')
+const messageDuration = ref(0);
 
 onMounted(async () => {
   const query = new URLSearchParams(location.search);
@@ -31,6 +33,8 @@ onMounted(async () => {
   channel.value = query.get('channel') || userInfo?.value.login || ''
   fontColor.value = query.get('fontColor') || '#000000'
   fontWeight.value = query.get('fontWeight') || 'normal'
+  messageDuration.value = Number.isNaN(parseInt(query.get('messageDuration') || ''))
+    ? 0 : parseInt(query.get('messageDuration') || '');
 })
 </script>
 

@@ -36,6 +36,11 @@
           </select>
         </label>
         <br />
+        <label>
+          持續顯示秒數(0代表不刪除)：<br />
+          <input v-model="messageDuration" placeholder="預設0為不刪除" /> 秒
+        </label>
+        <br />
         <button @click="copyUrl">📋 複製 OBS URL</button>
         <p class="obs-url" v-if="obsUrl">✅ URL：{{ obsUrl }}</p>
         <button @click="testTypingEffect"> 測試用訊息 </button>
@@ -48,6 +53,7 @@
         :fontSize="fontSize"
         :fontColor="fontColor"
         :fontWeight="fontWeight"
+        :messageDuration="messageDuration"
       />
     </div>
   </div>
@@ -65,6 +71,7 @@ const typingSpeed = ref(50);
 const fontSize = ref(12);
 const fontColor = ref('#000000') // 預設黑色
 const fontWeight = ref('normal')  // 預設普通
+const messageDuration = ref(0);
 
 onMounted(async () => {
   const query = new URLSearchParams(location.search);
@@ -77,10 +84,13 @@ onMounted(async () => {
   channel.value = query.get('channel') || ''
   fontColor.value = query.get('fontColor') || '#000000' // 預設黑色
   fontWeight.value = query.get('fontWeight') || 'normal'
+
+  messageDuration.value = Number.isNaN(parseInt(query.get('messageDuration') || ''))
+    ? 0 : parseInt(query.get('messageDuration') || '');
 })
 
 function copyUrl() {
-  const url = `${import.meta.env.VITE_DOMAIN}${import.meta.env.VITE_BASE_URL}display?user=${targetUser.value}&channel=${channel.value}&typingSpeed=${typingSpeed.value}&fontSize=${fontSize.value}&fontColor=${encodeURIComponent(fontColor.value)}&fontWeight=${fontWeight.value}`
+  const url = `${import.meta.env.VITE_DOMAIN}${import.meta.env.VITE_BASE_URL}display?user=${targetUser.value}&channel=${channel.value}&typingSpeed=${typingSpeed.value}&fontSize=${fontSize.value}&fontColor=${encodeURIComponent(fontColor.value)}&fontWeight=${fontWeight.value}&messageDuration=${messageDuration.value}`
   navigator.clipboard.writeText(url)
   obsUrl.value = url
 }
