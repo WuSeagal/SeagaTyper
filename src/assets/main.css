@@ -22,13 +22,18 @@
 }
 
 html, body, #app{
-  width: 100% !important;
-  height: 100% !important;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   border: 0;
   background-color: transparent !important;
   overflow: hidden; /* ✅ 防止超出滾動 */
+}
+
+body,html {
+  height: 100vh;
+  width: 100vw;
 }
 
 body {
@@ -135,4 +140,10 @@ button:focus-visible {
   /* 是否粗體 */
   font-weight: 400;
   /* 字體-預設立方體11號(OBS來做) */
+}
+
+.copyright {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  display: flex;
 }

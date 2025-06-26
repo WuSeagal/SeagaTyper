@@ -1,19 +1,31 @@
 <template>
   <div class="login-view">
     <div>
+      <h1>Twitch NPC對話聊天室展示器</h1>
+      <div class="description-container">
+        這是一個只要提供Twitch聊天室暱稱、Twitch頻道，
+        <br />
+        你就能產生一個實時展示該用戶在聊天室每次新輸入的內容的瀏覽器來源產生器。
+        <br />
+        有任何建議或疑難，都可以透過信箱<a href="mailto:seagal.wu@seagalogs.com">seagal.wu@seagalogs.com</a>
+        <br />
+        或<a href="https://seagalogs.com/" target="_blank">我的部落格-蜥嘎絡格室</a>來聯絡我
+        <br />
+        本專案為開源項目，可以參考<a href="https://github.com/WuSeagal/Twitch-NPC-Talk-Displayer" target="_blank">GITHUB</a>，不過還沒完工就是了LUL
+      </div>
       <div class="form-container">
         <label>
-          🎯 觀察對象名稱(聊天室暱稱)：<br />
+          🎯 觀察對象(聊天室暱稱)：<br />
           <input v-model="targetUser" placeholder="想追蹤的 user name" />
         </label>
         <br />
         <label>
-          🛰️ 觀察對象的發言頻道(頻道主人帳號username)：<br />
+          🛰️ 頻道(頻道主人帳號username)：<br />
           <input v-model="channel" placeholder="頻道名 (預設自己)" />
         </label>
         <br />
         <label>
-          語言速度(幾毫秒跑一個字)：<br />
+          語言速度(幾毫秒跑一個字，1000=1秒)：<br />
           <input v-model="typingSpeed" placeholder="預設50毫秒" /> 毫秒
         </label>
         <br />
@@ -56,6 +68,11 @@
         :messageDuration="messageDuration"
       />
       <FooterAds />
+      <div class="copyright">
+        Copyright © 2025 Seagalogs. 
+        <br />
+        All rights reserved.
+      </div>
     </div>
   </div>
 </template>
