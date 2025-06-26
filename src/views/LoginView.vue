@@ -55,6 +55,7 @@
         :fontWeight="fontWeight"
         :messageDuration="messageDuration"
       />
+      <FooterAds />
     </div>
   </div>
 </template>
@@ -62,6 +63,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import ChatDisplay from '@/components/ChatDisplay.vue'
+import FooterAds from '@/components/FooterAds.vue'
 
 const userInfo = ref<any>(null)
 const targetUser = ref('')
