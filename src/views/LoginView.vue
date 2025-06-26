@@ -15,33 +15,34 @@
       </div>
       <div class="form-container">
         <label>
-          🎯 觀察對象(聊天室暱稱)：<br />
+          👤 觀察對象(聊天室暱稱)：
           <input v-model="targetUser" placeholder="想追蹤的 user name" />
         </label>
         <br />
         <label>
-          🛰️ 頻道(頻道主人帳號username)：<br />
+          📺 頻道(頻道主人帳號username)：
           <input v-model="channel" placeholder="頻道名 (預設自己)" />
         </label>
         <br />
         <label>
-          語言速度(幾毫秒跑一個字，1000=1秒)：<br />
+          🦎 語言速度(幾毫秒跑一個字，1000=1秒)：
           <input v-model="typingSpeed" placeholder="預設50毫秒" /> 毫秒
         </label>
         <br />
         <label>
-          字體大小(px)：<br />
+          🔠 字體大小(px)：
           <input v-model="fontSize" placeholder="預設12px" /> px
         </label>
         <br />
         <label>
-          字體顏色：<br />
+          🎨 字體顏色：
           <input type="color" v-model="fontColor" />
+          <br />
           <span> {{ fontColor }} </span>
         </label>
         <br />
         <label>
-          是否粗體：
+          🅱️ 是否粗體：
           <select v-model="fontWeight">
             <option value="normal">否</option>
             <option value="bold">是</option>
@@ -49,7 +50,7 @@
         </label>
         <br />
         <label>
-          持續顯示秒數(0代表不刪除)：<br />
+          ⏱️ 持續顯示秒數(0代表不刪除)：
           <input v-model="messageDuration" placeholder="預設0為不刪除" /> 秒
         </label>
         <br />

@@ -50,6 +50,13 @@ a:hover {
   color: #535bf2;
 }
 
+input {
+  font-family: 'Cubic 11', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  border-radius: 4px;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -103,6 +110,10 @@ button:focus-visible {
   background: linear-gradient(#4293af,#e0e7e8 66%,#fef39c);
 }
 
+.description-container {
+  margin: 30px;
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
@@ -146,4 +157,5 @@ button:focus-visible {
   font-size: 1.4rem;
   line-height: 1.5;
   display: flex;
+  flex-direction: column;
 }
