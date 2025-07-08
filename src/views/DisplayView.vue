@@ -6,7 +6,7 @@
     :fontSize="fontSize"
     :fontColor="fontColor"
     :fontWeight="fontWeight"
-    :messageDuration="messageDuration"
+    :lastMessageDuration="lastMessageDuration"
   />
 </template>
 
@@ -14,14 +14,13 @@
 import { ref, onMounted } from 'vue'
 import ChatDisplay from '@/components/ChatDisplay.vue'
 
-const userInfo = ref<any>(null)
 const targetUser = ref('')
 const channel = ref('')
 const typingSpeed = ref(50);
 const fontSize = ref(12);
 const fontColor = ref('#000000')
 const fontWeight = ref('normal')
-const messageDuration = ref(0);
+const lastMessageDuration = ref(0);
 
 onMounted(async () => {
   const query = new URLSearchParams(location.search);
@@ -29,12 +28,12 @@ onMounted(async () => {
     ? 50 : parseInt(query.get('typingSpeed') || '');
   fontSize.value = Number.isNaN(parseInt(query.get('fontSize') || ''))
     ? 12 : parseInt(query.get('fontSize') || '');  
-  targetUser.value = query.get('user') || userInfo?.value.display_name || ''
-  channel.value = query.get('channel') || userInfo?.value.login || ''
+  targetUser.value = query.get('user') || ''
+  channel.value = query.get('channel') || ''
   fontColor.value = query.get('fontColor') || '#000000'
   fontWeight.value = query.get('fontWeight') || 'normal'
-  messageDuration.value = Number.isNaN(parseInt(query.get('messageDuration') || ''))
-    ? 0 : parseInt(query.get('messageDuration') || '');
+  lastMessageDuration.value = Number.isNaN(parseInt(query.get('lastMessageDuration') || ''))
+    ? 0 : parseInt(query.get('lastMessageDuration') || '');
 })
 </script>
 

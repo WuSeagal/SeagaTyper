@@ -51,7 +51,7 @@
         <br />
         <label>
           ⏱️ 持續顯示秒數(0代表不刪除)：
-          <input v-model="messageDuration" placeholder="預設0為不刪除" /> 秒
+          <input v-model="lastMessageDuration" placeholder="預設0為不刪除" /> 秒
         </label>
         <br />
         <button @click="copyUrl">📋 複製 OBS URL</button>
@@ -61,12 +61,12 @@
       <ChatDisplay 
         ref="chatDisplayRef"
         :targetUser="targetUser" 
-        :channel="channel || userInfo?.login"
+        :channel="channel"
         :typingSpeed= "typingSpeed"
         :fontSize="fontSize"
         :fontColor="fontColor"
         :fontWeight="fontWeight"
-        :messageDuration="messageDuration"
+        :lastMessageDuration="lastMessageDuration"
       />
       <FooterAds />
       <div class="copyright">
@@ -83,7 +83,6 @@ import { ref, onMounted } from 'vue'
 import ChatDisplay from '@/components/ChatDisplay.vue'
 import FooterAds from '@/components/FooterAds.vue'
 
-const userInfo = ref<any>(null)
 const targetUser = ref('')
 const channel = ref('')
 const obsUrl = ref('')
@@ -91,7 +90,7 @@ const typingSpeed = ref(50);
 const fontSize = ref(12);
 const fontColor = ref('#000000') // 預設黑色
 const fontWeight = ref('normal')  // 預設普通
-const messageDuration = ref(0);
+const lastMessageDuration = ref(0);
 
 onMounted(async () => {
   const query = new URLSearchParams(location.search);
@@ -105,12 +104,12 @@ onMounted(async () => {
   fontColor.value = query.get('fontColor') || '#000000' // 預設黑色
   fontWeight.value = query.get('fontWeight') || 'normal'
 
-  messageDuration.value = Number.isNaN(parseInt(query.get('messageDuration') || ''))
-    ? 0 : parseInt(query.get('messageDuration') || '');
+  lastMessageDuration.value = Number.isNaN(parseInt(query.get('lastMessageDuration') || ''))
+    ? 0 : parseInt(query.get('lastMessageDuration') || '');
 })
 
 function copyUrl() {
-  const url = `${import.meta.env.VITE_DOMAIN}${import.meta.env.VITE_BASE_URL}display?user=${targetUser.value}&channel=${channel.value}&typingSpeed=${typingSpeed.value}&fontSize=${fontSize.value}&fontColor=${encodeURIComponent(fontColor.value)}&fontWeight=${fontWeight.value}&messageDuration=${messageDuration.value}`
+  const url = `${import.meta.env.VITE_DOMAIN}${import.meta.env.VITE_BASE_URL}display?user=${targetUser.value}&channel=${channel.value}&typingSpeed=${typingSpeed.value}&fontSize=${fontSize.value}&fontColor=${encodeURIComponent(fontColor.value)}&fontWeight=${fontWeight.value}&lastMessageDuration=${lastMessageDuration.value}`
   navigator.clipboard.writeText(url)
   obsUrl.value = url
 }

@@ -128,22 +128,41 @@ button:focus-visible {
 .chat-container {
   display: flex;
   flex-direction: column;
-  text-align: center;
   justify-content: center;
-  /* flex-start-> 左到右 | flex-end 右到左*/
-  align-items: flex-end;
+  align-items: flex-start; /* 讓 chat-line 靠左 */
+  width: 100%;
+  overflow: hidden;
 }
 
-.chat-display {
+.chat-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-align: left;
+}
+
+.chat-display-name {
+  flex-shrink: 0;
+  margin-right: 4px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.chat-text-content {
+  display: inline-block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: clip;
   margin: 0;
   padding: 0;
   background-color: transparent;
+  flex-grow: 1;
 }
 
-.chat-display {
+.chat-text-content {
   /* 字體大小 */
   font-size: 12px;
   /* 字體顏色 */
