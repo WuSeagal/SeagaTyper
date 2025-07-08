@@ -72,7 +72,7 @@ function setupClient() {
     const name = tags['display-name'] ?? ''
     const segments = parseMessageWithEmotes(message, tags.emotes)
 
-    if (false) { //todo 是否要針對名字
+    if (props.targetUser) {
       if (tags['display-name']?.toLowerCase() === props.targetUser.toLowerCase()) {
         messageQueue.value.push({ displayName: name, segments })
         if (messageQueue.value.length > props.maxMessageAwait) {
@@ -81,9 +81,6 @@ function setupClient() {
         if (!isTyping) {
           displayNextMessage()
         }
-
-        // fullSegments.value = parseMessageWithEmotes(message, tags.emotes)
-        // startTypingEffect()
       }
     } else {
       messageQueue.value.push({ displayName: name, segments })
