@@ -20,7 +20,11 @@ const typingSpeed = ref(50);
 const fontSize = ref(12);
 const fontColor = ref('#000000')
 const fontWeight = ref('normal')
+const messageLineDuration = ref(5);
+const messageDuration = ref(10);
+const maxMessageAwait = ref(5);
 const lastMessageDuration = ref(0);
+const showName = ref(true);
 
 onMounted(async () => {
   const query = new URLSearchParams(location.search);
@@ -32,8 +36,15 @@ onMounted(async () => {
   channel.value = query.get('channel') || ''
   fontColor.value = query.get('fontColor') || '#000000'
   fontWeight.value = query.get('fontWeight') || 'normal'
+  messageLineDuration.value = Number.isNaN(parseInt(query.get('messageLineDuration') || ''))
+    ? 5 : parseInt(query.get('messageLineDuration') || '');
+  messageDuration.value = Number.isNaN(parseInt(query.get('messageDuration') || ''))
+    ? 10 : parseInt(query.get('messageDuration') || '');
+  maxMessageAwait.value = Number.isNaN(parseInt(query.get('maxMessageAwait') || ''))
+    ? 5 : parseInt(query.get('maxMessageAwait') || '');
   lastMessageDuration.value = Number.isNaN(parseInt(query.get('lastMessageDuration') || ''))
     ? 0 : parseInt(query.get('lastMessageDuration') || '');
+  showName.value = query.get('showName') === 'true';
 })
 </script>
 
