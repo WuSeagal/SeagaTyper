@@ -139,7 +139,18 @@ function parseMessageWithEmotes(message: string, emotes: any): string[] {
       const text = message.slice(lastIndex, start)
       segments.push(...text.split(''))
     }
-    const img = `<img src="https://static-cdn.jtvnw.net/emoticons/v1/${id}/3.0" style="height: 1em; vertical-align: middle;" />`
+
+    const animatedUrl = `https://static-cdn.jtvnw.net/emoticons/v2/${id}/animated/dark/3.0`
+    const staticUrl = `https://static-cdn.jtvnw.net/emoticons/v2/${id}/static/dark/3.0`
+
+    const img = `
+      <img 
+        src="${animatedUrl}" 
+        onerror="this.onerror=null;this.src='${staticUrl}'" 
+        style="height: 1em; vertical-align: middle;" 
+      />
+    `.trim()
+    
     segments.push(img)
     lastIndex = end + 1
   }
