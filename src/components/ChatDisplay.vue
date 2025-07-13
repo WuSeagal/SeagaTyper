@@ -154,7 +154,6 @@ function parseMessageWithEmotes(message: string, emotes: any): string[] {
 
 function startTypingEffect(onFinish?: () => void) {
   if (typingInterval) clearInterval(typingInterval)
-  if (clearMessageTimeout) clearTimeout(clearMessageTimeout)
 
   displayedHtml.value = ''
   let index = 0
