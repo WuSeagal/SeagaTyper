@@ -74,7 +74,7 @@ function setupClient() {
 
     if (props.targetUser) {
       if (tags['display-name']?.toLowerCase() === props.targetUser.toLowerCase()) {
-        messageQueue.value.push({ displayName: name, segments })
+          messageQueue.value.push({ displayName: name, segments })
         if (messageQueue.value.length > props.maxMessageAwait) {
           messageQueue.value.shift()
         }
@@ -98,7 +98,7 @@ function displayNextMessage() {
   const next = messageQueue.value.shift()
   if (!next) {
     isTyping = false
-    // 如果 queue 空了 → 等最後一條的延遲時間後清除畫面
+    // lastMessageDuration: 如果 queue 空了 → 等最後一條的延遲時間後清除畫面
     if (props.lastMessageDuration > 0) {
       clearMessageTimeout = window.setTimeout(() => {
         displayedHtml.value = ''
@@ -113,6 +113,7 @@ function displayNextMessage() {
   currentDisplayName.value = next.displayName
 
   startTypingEffect(() => {
+    // messageDuration: 此條訊息顯示完成後, 過多久嘗試顯示下一條訊息
     setTimeout(() => {
       displayNextMessage()
     }, props.messageDuration * 1000)
