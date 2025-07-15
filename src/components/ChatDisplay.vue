@@ -166,47 +166,54 @@ function parseMessageWithEmotes(message: string, emotes: any): string[] {
 function startTypingEffect(onFinish?: () => void) {
   if (typingInterval) clearInterval(typingInterval)
 
-  displayedHtml.value = ''
-  let index = 0
-  let lineBuffer: string[] = []
-  let isWaitingBeforeNewLine = false
   const container = typingContainer.value
-
   if (!container) return
+
+  // 先清空
+  container.innerHTML = ''
+  let index = 0
+  let lineBuffer: (string | HTMLElement)[] = []
+  let isWaitingBeforeNewLine = false
 
   typingInterval = setInterval(() => {
     if (isWaitingBeforeNewLine) return
     if (index >= fullSegments.value.length) {
       clearInterval(typingInterval)
-      onFinish?.() // 執行 callback (接續下一句)
+      onFinish?.()
       return
     }
 
-    const nextChar = fullSegments.value[index]
-    const testLine = [...lineBuffer, nextChar].join('')
-    displayedHtml.value = testLine
+    const next = fullSegments.value[index]
 
-    nextTick(() => {
-      if (!container) return
+    const el = document.createElement('span')
+    if (next.startsWith('<img')) {
+      // emote HTML → 真實元素
+      const wrapper = document.createElement('div')
+      wrapper.innerHTML = next
+      const img = wrapper.firstElementChild! as HTMLElement
+      lineBuffer.push(img)
+      container.appendChild(img)
+    } else {
+      el.textContent = next
+      lineBuffer.push(el)
+      container.appendChild(el)
+    }
 
-      const willOverflow = container.scrollWidth > container.clientWidth
+    // 檢查是否 overflow
+    const willOverflow = container.scrollWidth > container.clientWidth
+    if (willOverflow) {
+      isWaitingBeforeNewLine = true
 
-      if (willOverflow) {
-        isWaitingBeforeNewLine = true
+      setTimeout(() => {
+        container.innerHTML = ''
+        lineBuffer = []
+        isWaitingBeforeNewLine = false
+      }, props.messageLineDuration * 1000)
 
-        setTimeout(() => {
-          displayedHtml.value = ''
-          lineBuffer = []
-          isWaitingBeforeNewLine = false
-        }, props.messageLineDuration * 1000)
+      return
+    }
 
-        return
-      }
-
-      lineBuffer.push(nextChar)
-      displayedHtml.value = lineBuffer.join('')
-      index++
-    })
+    index++
   }, props.typingSpeed)
 }
 
