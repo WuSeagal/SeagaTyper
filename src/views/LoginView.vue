@@ -25,9 +25,9 @@
         <br />
         <!-- 顯示用戶 targetUser -->
         <label>
-          👤 指定顯示用戶（可選）：僅顯示該使用者的訊息。<br>若要顯示所有觀眾的訊息，請留白此欄位。
+          👤 指定顯示用戶（可選）：僅顯示該使用者的訊息。<br>請填"用戶顯示名稱"，若要顯示所有觀眾的訊息，請留白此欄位。<br>（如 用戶聊天室名稱(用戶帳號) => 請輸入 用戶聊天室名稱）
           <br />
-          <input v-model="targetUser" placeholder="留白代表會顯示全部觀眾訊息" />
+          <input v-model="targetUser" placeholder="不指定用戶請留白" />
         </label>
         <br />
         <!-- 是否顯示名稱 showName -->
