@@ -14,87 +14,186 @@
         本專案為開源開發中項目，尚未完工，歡迎貢獻或提供建議LUL (<a href="https://github.com/WuSeagal/Twitch-NPC-Talk-Displayer" target="_blank">可以參考GITHUB</a>)
       </div>
       <div class="form-container">
-        <!-- 頻道 channel -->
-        <label>
-          📺 頻道帳號（必填）：Twitch 網址最後的 ID
-          <br />
-          （如 https://twitch.tv/example => 輸入 example）。
-          <br />
-          <input v-model="channel" placeholder="頻道帳號，必填" />
-        </label>
-        <br />
-        <!-- 顯示用戶 targetUser -->
-        <label>
-          👤 指定顯示用戶（可選）：僅顯示該使用者的訊息。<br>請填"用戶顯示名稱"，若要顯示所有觀眾的訊息，請留白此欄位。<br>（如 用戶聊天室名稱(用戶帳號) => 請輸入 用戶聊天室名稱）
-          <br />
-          <input v-model="targetUser" placeholder="不指定用戶請留白" />
-        </label>
-        <br />
-        <!-- 是否顯示名稱 showName -->
-        <label>
-          👤 顯示使用者名稱，是否在訊息前標示用戶名（預設顯示）：
-          <select v-model="showName">
-            <option value="true">顯示</option>
-            <option value="false">不顯示</option>
-          </select>
-        </label>
-        <br />
-        <!-- 每字顯示間隔 typingSpeed  -->
-        <label>
-          🦎 每字顯示間隔（單位：毫秒，1000 毫秒 = 1 秒）：
-          <input type="number" v-model="typingSpeed" placeholder="預設50毫秒" /> 毫秒
-        </label>
-        <br />
-        <!-- 換行間隔 messageLineDuration  -->
-        <label>
-          🦎 換行間隔，內容超過一行的時候每幾秒換一次行：
-          <input type="number" v-model="messageLineDuration" placeholder="預設5秒" /> 秒
-        </label>
-        <br />
-        <!-- 訊息呈現時長 messageDuration  -->
-        <label>
-          ⏱️ 訊息呈現時長，訊息打完後，停留畫面幾秒後才消失：
-          <input type="number" v-model="messageDuration" placeholder="預設10秒" /> 秒
-        </label>
-        <br />
-        <!-- 訊息停留時長 lastMessageDuration  -->
-        <label>
-          ⏱️ 訊息停留時長：沒有新訊息時，最後一則訊息持續顯示幾秒（0 = 永久）
-          <input type="number" v-model="lastMessageDuration" placeholder="預設0，永久停留" /> 秒
-        </label>
-        <br />
-        <!-- 畫面最多保留幾則訊息 maxMessageAwait -->
-        <label>
-          🗃️ 畫面最多保留幾則訊息（範圍：5~30，僅保留最新 N 筆）
-          <input 
-            type="number" 
-            v-model="maxMessageAwait"
-            :min="5"
-            :max="30"
-            placeholder="預設5，範圍5~30" /> 筆（只保留最新的 N 筆訊息）
-        </label>
-        <br />
-        <!-- 文字大小 fontSize -->
-        <label>
-          🔠 文字大小（單位：px，預設 12）：
-          <input type="number" v-model="fontSize" placeholder="預設12px" /> px
-        </label>
-        <br />
-        <!-- 文字顏色 fontColor -->
-        <label>
-          🎨 文字顏色： {{ fontColor }}
-          <br />
-          <input type="color" v-model="fontColor" />
-        </label>
-        <br />
-        <!-- 字體粗細 fontWeight -->
-        <label>
-          🅱️ 字體粗細：
-          <select v-model="fontWeight">
-            <option value="normal">一般</option>
-            <option value="bold">粗體</option>
-          </select>
-        </label>
+        <!-- 頻道資訊 -->
+        <div class="fancy-card-wrapper">
+          <div class="fancy-title">
+            頻道資訊
+          </div>
+          <div class="fancy-card">
+            <label>
+              📺 頻道帳號（必填）：Twitch 頻道網址最後面的內容(頻道擁有者帳號)
+              <br />
+              （如 https://twitch.tv/exampleChannel => 輸入 exampleChannel）。
+              <br />
+              <input v-model="channel" placeholder="頻道帳號" />
+            </label>
+          </div>
+        </div>
+        
+        <!-- 訊息篩選區域 -->
+        <div class="fancy-card-wrapper">
+          <div class="fancy-title">
+            篩選訊息
+          </div>
+          <div class="fancy-card">
+            <!-- 黑名單 -->
+            <div class="form-group">
+              <label for="blacklist">黑名單</label>
+              <input type="text" id="blacklist" v-model="blacklistInput" placeholder="輸入目標用戶帳號，用逗號分隔" />
+            </div>
+            <!-- 用戶篩選 -->
+            <div class="form-group">
+              <label>
+                <input type="checkbox" v-model="isLimitDisplay" />
+                啟用用戶篩選
+              </label>
+            </div>
+            <!-- 若啟用用戶篩選則可調整 -->
+            <div :class="{ 'disabled-section': !isLimitDisplay }">
+              <!-- 白名單 -->
+              <div class="form-group">
+                <label for="whitelist">白名單</label>
+                <input type="text" id="whitelist" v-model="whiteListInput" :disabled="!isLimitDisplay" />
+              </div>
+              <!-- 身份複選 -->
+              <div class="form-group">
+                <label>身份篩選</label>
+                <div>
+                  <label><input type="checkbox" v-model="displayRoles" value="1" :disabled="!isLimitDisplay" /> 頻道擁有者</label>
+                  <label><input type="checkbox" v-model="displayRoles" value="2" :disabled="!isLimitDisplay" /> Mod(大劍)</label>
+                  <label><input type="checkbox" v-model="displayRoles" value="3" :disabled="!isLimitDisplay" /> VIP</label>
+                </div>
+                <div>
+                  <label><input type="checkbox" v-model="displayRoles" value="4" :disabled="!isLimitDisplay" /> 創建者</label>
+                  <label><input type="checkbox" v-model="displayRoles" value="5" :disabled="!isLimitDisplay" /> 層級2訂閱</label>
+                  <label><input type="checkbox" v-model="displayRoles" value="6" :disabled="!isLimitDisplay" /> 層級3訂閱</label>
+                </div>
+              </div>
+              <!-- 訂閱月份 -->
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" v-model="displaySubs" :disabled="!isLimitDisplay" />
+                  有訂閱
+                </label>
+                <input
+                  type="number"
+                  v-model="subMonthsLimit"
+                  min="0"
+                  placeholder="輸入月份"
+                  :disabled="!isLimitDisplay || !displaySubs"
+                />
+              </div>
+              <!-- 小奇點數量 -->
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" v-model="displayBits" :disabled="!isLimitDisplay" />
+                  小奇點 - 數量
+                </label>
+                <select v-model="cheerBitsLimitInput" :disabled="!isLimitDisplay || !displayBits">
+                  <option value="">請選擇</option>
+                  <option value="100">100+</option>
+                  <option value="500">500+</option>
+                  <option value="1000">1000+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 顯示相關設定 -->
+        <div class="2-cols-fancy-card-container">
+          <!-- 顯示時間設定 -->
+          <div class="fancy-card-wrapper">
+            <div class="fancy-title">
+              顯示設定
+            </div>
+            <div class="fancy-card">
+              <!-- 顯示名稱 showName -->
+              <div class="form-group">
+                <label>
+                  👤 顯示使用者名稱：
+                  <select v-model="showName">
+                    <option value="true">顯示</option>
+                    <option value="false">不顯示</option>
+                  </select>
+                </label>
+              </div>
+              <!-- 每字顯示間隔 typingSpeed -->
+              <div class="form-group">
+                <label>
+                  🦎 每字顯示間隔（毫秒）：
+                  <input type="number" v-model="typingSpeed" placeholder="預設50毫秒" /> 毫秒
+                </label>
+              </div>
+              <div class="form-group">
+                <label>
+                  🦎 換行間隔（幾秒換一行）：
+                  <input type="number" v-model="messageLineDuration" placeholder="預設5秒" /> 秒
+                </label>
+              </div>
+              <!-- 訊息呈現時長 messageDuration -->
+              <div class="form-group">
+                <label>
+                  ⏱️ 訊息呈現時長（打字完後停留）：
+                  <input type="number" v-model="messageDuration" placeholder="預設10秒" /> 秒
+                </label>
+              </div>
+              <!-- 訊息停留時長 lastMessageDuration -->
+              <div class="form-group">
+                <label>
+                  ⏱️ 最後一則訊息停留秒數（0 = 永久）：
+                  <input type="number" v-model="lastMessageDuration" placeholder="預設0，永久停留" /> 秒
+                </label>
+              </div>
+              <!-- 畫面最多保留幾則訊息 maxMessageAwait -->
+              <div class="form-group">
+                <label>
+                  🗃️ 畫面最多保留訊息數量（5~30）：
+                  <input 
+                    type="number" 
+                    v-model="maxMessageAwait"
+                    :min="5"
+                    :max="30"
+                    placeholder="預設5，範圍5~30" /> 筆
+                </label>
+              </div>
+              
+            </div>
+          </div>
+          <!-- 文字相關設定 -->
+          <div class="fancy-card-wrapper">
+            <div class="fancy-title">
+              文字設定
+            </div>
+            <div class="fancy-card">
+              <!-- 文字大小 fontSize -->
+              <div class="form-group">
+                <label>
+                  🔠 文字大小（px）：
+                  <input type="number" v-model="fontSize" placeholder="預設12px" /> px
+                </label>
+              </div>
+              <!-- 文字顏色 fontColor -->
+              <div class="form-group">
+                <label>
+                  🎨 文字顏色： {{ fontColor }}
+                  <input type="color" v-model="fontColor" />
+                </label>
+              </div>
+              <!-- 字體粗細 fontWeight -->
+              <div class="form-group">
+                <label>
+                  🅱️ 字體粗細：
+                  <select v-model="fontWeight">
+                    <option value="normal">一般</option>
+                    <option value="bold">粗體</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <br />
         <br />
         <button @click="copyUrl">📋 複製 OBS 用網址</button>
@@ -103,9 +202,8 @@
       </div>
       <ChatDisplay 
         ref="chatDisplayRef"
-        :targetUser="targetUser" 
-        :showName="showName"
         :channel="channel"
+        :showName="showName"
         :typingSpeed= "typingSpeed"
         :fontSize="fontSize"
         :fontColor="fontColor"
@@ -114,6 +212,19 @@
         :messageLineDuration="messageLineDuration"
         :lastMessageDuration="lastMessageDuration"
         :maxMessageAwait="maxMessageAwait"
+        :isLimitDisplay="isLimitDisplay"
+        :blackList="blackList"
+        :whiteList="whiteList"
+        :displayBroadcaster="displayRoles.includes(1)"
+        :displayMod="displayRoles.includes(2)"
+        :displayVip="displayRoles.includes(3)"
+        :displayFounder="displayRoles.includes(4)"
+        :displayTier2Sub="displayRoles.includes(5)"
+        :displayTier3Sub="displayRoles.includes(6)"
+        :displaySubs="displaySubs"
+        :subMonthsLimit="subMonthsLimit"
+        :displayBits="displayBits"
+        :cheerBitsLimit="cheerBitsLimit"
       />
       <FooterAds />
       <div class="copyright">
@@ -126,11 +237,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import ChatDisplay from '@/components/ChatDisplay.vue'
 import FooterAds from '@/components/FooterAds.vue'
+import { decodeConfig, encodeConfig, type DisplayConfig } from '@/utils/configEncoder'
 
-const targetUser = ref('')
 const channel = ref('')
 const obsUrl = ref('')
 const typingSpeed = ref(50);
@@ -143,47 +254,104 @@ const maxMessageAwait = ref(5);
 const lastMessageDuration = ref(0);
 const showName = ref(true);
 
-onMounted(async () => {
+// 訊息篩選
+const isLimitDisplay = ref(false);
+const whiteList = ref<string[]>([]);
+const blackList = ref<string[]>([]);
+const displayRoles = ref<number[]>([]);
+const displaySubs = ref(false);
+const subMonthsLimit = ref(0);
+const displayBits = ref(false);
+const cheerBitsLimitInput = ref<string>('');
+
+
+const whiteListInput = computed({
+  get: () => whiteList.value.join(','),
+  set: (val: string) => {
+    whiteList.value = val
+      .split(',')
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
+  }
+});
+const blacklistInput = computed({
+  get: () => blackList.value.join(','),
+  set: (val: string) => {
+    blackList.value = val
+      .split(',')
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
+  }
+});
+const cheerBitsLimit = computed<number>({
+  get() {
+    const val = Number(cheerBitsLimitInput.value)
+    return isNaN(val) || cheerBitsLimitInput.value === '' ? 0 : val
+  },
+  set(val: number | null) {
+    cheerBitsLimitInput.value = val === 0 ? '' : String(val)
+  }
+})
+
+onMounted(() => {
   const query = new URLSearchParams(location.search);
-  typingSpeed.value = Number.isNaN(parseInt(query.get('typingSpeed') || ''))
-    ? 50 : parseInt(query.get('typingSpeed') || '');
-  fontSize.value = Number.isNaN(parseInt(query.get('fontSize') || ''))
-    ? 12 : parseInt(query.get('fontSize') || '');
-
-  targetUser.value = query.get('user') || ''
-  channel.value = query.get('channel') || ''
-  fontColor.value = query.get('fontColor') || '#000000' // 預設黑色
-  fontWeight.value = query.get('fontWeight') || 'normal'
-
-  messageLineDuration.value = Number.isNaN(parseInt(query.get('messageLineDuration') || ''))
-    ? 5 : parseInt(query.get('messageLineDuration') || '');
-  messageDuration.value = Number.isNaN(parseInt(query.get('messageDuration') || ''))
-    ? 10 : parseInt(query.get('messageDuration') || '');
-  maxMessageAwait.value = Number.isNaN(parseInt(query.get('maxMessageAwait') || ''))
-    ? 5 : parseInt(query.get('maxMessageAwait') || '');
-  lastMessageDuration.value = Number.isNaN(parseInt(query.get('lastMessageDuration') || ''))
-    ? 0 : parseInt(query.get('lastMessageDuration') || '');
-  showName.value = query.get('showName') === 'true';
+  const cfgStr = query.get('config')
+  if (cfgStr) {
+    const config = decodeConfig(cfgStr)
+    if (config) {
+      channel.value = config.c || ''
+      typingSpeed.value = config.ts || 50
+      fontSize.value = config.fs || 12
+      fontColor.value = config.fc || '#000000'
+      fontWeight.value = config.fw || 'normal'
+      showName.value = config.sn ?? true
+      messageLineDuration.value = config.mld || 5
+      messageDuration.value = config.md || 10
+      lastMessageDuration.value = config.lmd || 0
+      maxMessageAwait.value = config.mma || 5
+      isLimitDisplay.value = config.ild ?? false
+      whiteList.value = config.wl || []
+      blackList.value = config.bl || []
+      displayRoles.value = config.dr || []
+      displaySubs.value = config.ds ?? false
+      subMonthsLimit.value = config.sml || 0
+      displayBits.value = config.db ?? false
+      cheerBitsLimit.value = config.cbl || 0
+    }
+  };
 })
 
 function copyUrl() {
-  const url = `${import.meta.env.VITE_DOMAIN}${import.meta.env.VITE_BASE_URL}display`
-    + `?user=${encodeURIComponent(targetUser.value)}` 
-    + `&channel=${channel.value}` 
-    + `&typingSpeed=${typingSpeed.value}`
-    + `&fontSize=${fontSize.value}`
-    + `&fontColor=${encodeURIComponent(fontColor.value)}`
-    + `&fontWeight=${fontWeight.value}`
-    + `&showName=${showName.value}`
-    + `&messageLineDuration=${messageLineDuration.value}`
-    + `&messageDuration=${messageDuration.value}`
-    + `&lastMessageDuration=${lastMessageDuration.value}`
-    + `&maxMessageAwait=${maxMessageAwait.value}`;
+  const config: DisplayConfig = {
+    c: channel.value,
+    ts: typingSpeed.value,
+    fs: fontSize.value,
+    fc: fontColor.value,
+    fw: fontWeight.value,
+    sn: showName.value,
+    mld: messageLineDuration.value,
+    md: messageDuration.value,
+    lmd: lastMessageDuration.value,
+    mma: maxMessageAwait.value,
+    ild: isLimitDisplay.value,
+    wl: whiteList.value,
+    bl: blackList.value,
+    dr: displayRoles.value,
+    ds: displaySubs.value,
+    sml: subMonthsLimit.value,
+    db: displayBits.value,
+    cbl: cheerBitsLimit.value,
+  }
+
+  const configStr = encodeConfig(config)
+  const url = `${import.meta.env.VITE_DOMAIN}${import.meta.env.VITE_BASE_URL}display?config=${configStr}`
+
   navigator.clipboard.writeText(url)
   obsUrl.value = url
 }
 
 const chatDisplayRef = ref<InstanceType<typeof ChatDisplay> | null>(null)
+
 function testTypingEffect() {
   chatDisplayRef.value?.testTypingEffect()
 }

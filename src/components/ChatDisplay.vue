@@ -10,30 +10,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch, nextTick } from 'vue'
 import tmi from 'tmi.js'
+import type { ChatProps } from '@/types/ChatProps';
+import { defaultChatProps } from '@/constants/defaultChatProps';
 
-const props = withDefaults(defineProps<{ 
-  targetUser: string,
-  channel: string,
-  typingSpeed?: number,
-  fontSize?: number,
-  fontColor?: string,
-  fontWeight?: string,
-  messageLineDuration?: number, // 每次換行間隔
-  messageDuration?: number, // 每條訊息完整呈現後的持續時間
-  maxMessageAwait?: number, // 最大等待訊息數量
-  lastMessageDuration?: number, // 最後一條消息的持續時間
-  showName?: boolean
-}>(), {
-  typingSpeed: 50, // 預設打字速度
-  fontSize: 12, // 預設字體大小
-  fontColor: '#000000',
-  fontWeight: 'normal',
-  messageLineDuration: 5, // 預設為 5秒 不可0
-  messageDuration: 10, // 預設為 10秒 不可0
-  maxMessageAwait: 5, // 預設為5
-  lastMessageDuration: 20, // 預設為 20秒 可0(不清除直到有新訊息)
-  showName: true // 預設顯示名稱
-})
+const props = withDefaults(defineProps<ChatProps>(), defaultChatProps)
 
 const typingContainer = ref<HTMLElement | null>(null)
 const currentDisplayName = ref('')
@@ -72,8 +52,10 @@ function setupClient() {
     const name = tags['display-name'] ?? ''
     const segments = parseMessageWithEmotes(message, tags.emotes)
 
-    if (props.targetUser) {
-      if (tags['display-name']?.toLowerCase() === props.targetUser.toLowerCase()) {
+    const isDisplay = checkTags(tags);
+    
+
+    if (isDisplay) {
           messageQueue.value.push({ displayName: name, segments })
         if (messageQueue.value.length > props.maxMessageAwait) {
           messageQueue.value.shift()
@@ -81,15 +63,6 @@ function setupClient() {
         if (!isTyping) {
           displayNextMessage()
         }
-      }
-    } else {
-      messageQueue.value.push({ displayName: name, segments })
-      if (messageQueue.value.length > props.maxMessageAwait) {
-        messageQueue.value.shift()
-      }
-      if (!isTyping) {
-        displayNextMessage()
-      }
     }
   })
 }
@@ -235,4 +208,56 @@ defineExpose({
 })
 
 onMounted(setupClient)
+
+function checkTags(tags: tmi.ChatUserstate) {
+  const username = tags['username'];
+  // 黑名單(username)
+  if (props.blackList && username && 
+  props.blackList.map(name => name).includes(username)) {
+    return false;
+  }
+  // 是否開啟限制
+  if (!props.isLimitDisplay) {
+    return true;
+  }
+  // 白名單(username)
+  if (props.whiteList && username && 
+  props.whiteList.map(name => name).includes(username)) {
+    return true;
+  }
+  // 頻道擁有者
+  if (props.displayBroadcaster && (tags['badges']?.broadcaster)) {
+    return true;
+  }
+  // 大劍
+  if (props.displayMod && (tags.mod || tags['badges']?.moderator)) {
+    return true;
+  }
+  // VIP
+  if (props.displayVip && (tags.vip || tags['badges']?.vip)) {
+    return true;
+  }
+  // 創建者
+  if (props.displayFounder && tags['badges']?.founder) {
+    return true;
+  }
+  // 層級2/層級3訂閱 和訂閱時長
+  const subTier = Math.floor(Number(tags['badges']?.subscriber) / 1000); // 訂閱層級：1, 2, 3
+  const subMonth = Number(tags['badge-info']?.subscriber) % 1000; // 總訂閱月份
+  if (props.displayTier2Sub && subTier === 2) {
+    return true;
+  }
+  if (props.displayTier3Sub && subTier === 3) {
+    return true;
+  }
+  if (props.displaySubs && subMonth >= props.subMonthsLimit) {
+    return true;
+  }
+  // 小奇點
+  const donatedBits = Number(tags['badges']?.bits);
+  if (props.displayBits && donatedBits >= props.cheerBitsLimit) {
+    return true;
+  }
+  return false;
+}
 </script>
