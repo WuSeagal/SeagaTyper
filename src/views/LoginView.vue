@@ -1,6 +1,6 @@
 <template>
   <div class="login-view">
-    <div>
+    <div class="login-layout">
       <h1>Twitch NPC對話聊天室展示器</h1>
       <div class="description-container">
         只需輸入 Twitch 頻道名稱並調整設定，即可產生一個實時展示觀眾發言的 OBS 瀏覽器來源。
@@ -39,7 +39,12 @@
             <!-- 黑名單 -->
             <div class="form-group">
               <label for="blacklist">黑名單</label>
-              <input type="text" id="blacklist" v-model="blacklistInput" placeholder="輸入目標用戶帳號，用逗號分隔" />
+              <input 
+                type="text" 
+                id="blacklist" 
+                v-model="blacklistInput"
+                placeholder="輸入目標用戶帳號，用逗號分隔" 
+              />
             </div>
             <!-- 用戶篩選 -->
             <div class="form-group">
@@ -53,17 +58,23 @@
               <!-- 白名單 -->
               <div class="form-group">
                 <label for="whitelist">白名單</label>
-                <input type="text" id="whitelist" v-model="whiteListInput" :disabled="!isLimitDisplay" />
+                <input 
+                  type="text" 
+                  id="whitelist" 
+                  v-model="whitelistInput"
+                  placeholder="輸入目標用戶帳號，用逗號分隔"
+                  :disabled="!isLimitDisplay"
+                />
               </div>
               <!-- 身份複選 -->
               <div class="form-group">
                 <label>身份篩選</label>
-                <div>
+                <div class="roles-flex">
                   <label><input type="checkbox" v-model="displayRoles" value="1" :disabled="!isLimitDisplay" /> 頻道擁有者</label>
                   <label><input type="checkbox" v-model="displayRoles" value="2" :disabled="!isLimitDisplay" /> Mod(大劍)</label>
                   <label><input type="checkbox" v-model="displayRoles" value="3" :disabled="!isLimitDisplay" /> VIP</label>
                 </div>
-                <div>
+                <div class="roles-flex">
                   <label><input type="checkbox" v-model="displayRoles" value="4" :disabled="!isLimitDisplay" /> 創建者</label>
                   <label><input type="checkbox" v-model="displayRoles" value="5" :disabled="!isLimitDisplay" /> 層級2訂閱</label>
                   <label><input type="checkbox" v-model="displayRoles" value="6" :disabled="!isLimitDisplay" /> 層級3訂閱</label>
@@ -73,15 +84,19 @@
               <div class="form-group">
                 <label>
                   <input type="checkbox" v-model="displaySubs" :disabled="!isLimitDisplay" />
-                  有訂閱
+                  已訂閱：
                 </label>
-                <input
+                <label>
+                  <input
                   type="number"
                   v-model="subMonthsLimit"
                   min="0"
                   placeholder="輸入月份"
                   :disabled="!isLimitDisplay || !displaySubs"
-                />
+                  />
+                  個月
+                </label>
+                
               </div>
               <!-- 小奇點數量 -->
               <div class="form-group">
@@ -89,7 +104,11 @@
                   <input type="checkbox" v-model="displayBits" :disabled="!isLimitDisplay" />
                   小奇點 - 數量
                 </label>
-                <select v-model="cheerBitsLimitInput" :disabled="!isLimitDisplay || !displayBits">
+                <select 
+                  :value="cheerBitsLimitInput" 
+                  @change="e => cheerBitsLimitInput = (e.target as HTMLSelectElement).value" 
+                  :disabled="!isLimitDisplay || !displayBits"
+                >
                   <option value="">請選擇</option>
                   <option value="100">100+</option>
                   <option value="500">500+</option>
@@ -101,7 +120,7 @@
         </div>
 
         <!-- 顯示相關設定 -->
-        <div class="2-cols-fancy-card-container">
+        <div class="cols2-fancy-card-container">
           <!-- 顯示時間設定 -->
           <div class="fancy-card-wrapper">
             <div class="fancy-title">
@@ -237,7 +256,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import ChatDisplay from '@/components/ChatDisplay.vue'
 import FooterAds from '@/components/FooterAds.vue'
 import { decodeConfig, encodeConfig, type DisplayConfig } from '@/utils/configEncoder'
@@ -264,25 +283,23 @@ const subMonthsLimit = ref(0);
 const displayBits = ref(false);
 const cheerBitsLimitInput = ref<string>('');
 
+const blacklistInput = ref('');
+const whitelistInput = ref('');
 
-const whiteListInput = computed({
-  get: () => whiteList.value.join(','),
-  set: (val: string) => {
-    whiteList.value = val
-      .split(',')
-      .map(s => s.trim())
-      .filter(s => s.length > 0);
-  }
+watch(blacklistInput, (val) => {
+  blackList.value = val
+    .split(',')
+    .map(s => s.trim())
+    .filter(s => s.length > 0)
 });
-const blacklistInput = computed({
-  get: () => blackList.value.join(','),
-  set: (val: string) => {
-    blackList.value = val
-      .split(',')
-      .map(s => s.trim())
-      .filter(s => s.length > 0);
-  }
+
+watch(whitelistInput, (val) => {
+  whiteList.value = val
+    .split(',')
+    .map(s => s.trim())
+    .filter(s => s.length > 0)
 });
+
 const cheerBitsLimit = computed<number>({
   get() {
     const val = Number(cheerBitsLimitInput.value)

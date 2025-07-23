@@ -55,6 +55,7 @@ input {
   font-size: 16px;
   line-height: 1.5;
   border-radius: 4px;
+  margin: 5px;
 }
 
 h1 {
@@ -108,6 +109,19 @@ button:focus-visible {
   padding: 16px;
   box-sizing: border-box;
   background: linear-gradient(#4293af,#e0e7e8 66%,#fef39c);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-layout {
+  height: auto !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+	width: 1200px;
+  max-width: 100%;
 }
 
 .description-container {
@@ -119,6 +133,15 @@ button:focus-visible {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 1200px;
+  max-width: 100%;
+}
+
+.cols2-fancy-card-container{
+  display:flex;
+  flex-direction:row;
+  gap:20px;
+  width: 100%;
 }
 
 .fancy-card-wrapper {
@@ -149,6 +172,27 @@ button:focus-visible {
 
 .fancy-card {
   padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  max-width: 400px;
+  min-width: 200px;
+}
+
+.roles-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  justify-content: space-around;
+}
+
+.roles-flex label {
+  white-space: nowrap;
 }
 
 .obs-url {
@@ -207,4 +251,10 @@ button:focus-visible {
   line-height: 1.5;
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .cols2-fancy-card-container {
+    flex-direction: column;
+  }
 }
