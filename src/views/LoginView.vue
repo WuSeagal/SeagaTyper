@@ -1,15 +1,19 @@
 <template>
   <div class="login-view">
     <div class="login-layout">
-      <h1>Twitch NPC對話聊天室展示器</h1>
+      <h1>SeagaTalker TTV</h1>
       <div class="description-container">
-        只需輸入 Twitch 頻道名稱並調整設定，即可產生一個實時展示觀眾發言的 OBS 瀏覽器來源。
+        這是一個for實況直播用顯示單行Twitch聊天室內容的瀏覽器來源產生器。
         <br />
-        也支援輸入指定用戶顯示名稱，會只顯示其訊息。
+        舊稱：Twitch NPC對話聊天室展示器
+        <br />
+        輸入Twitch頻道帳號並且調整設定，就能客製篩選接收的發言者&顯示樣式。
+        <br />
+        能夠一字一字像打字般呈現，並且只針對特定身分的聊天室發言進行呈現是本工具的特點。
         <br />
         有任何建議或疑難，都可以透過信箱<a href="mailto:seagal.wu@seagalogs.com">seagal.wu@seagalogs.com</a>
         <br />
-        或<a href="https://seagalogs.com/" target="_blank">我的部落格-蜥嘎絡格室</a>來聯絡我
+        或<a href="https://seagalogs.com/" target="_blank">我的部落格-蜥嘎絡格室</a>來聯絡我。
         <br />
         本專案為開源開發中項目，尚未完工，歡迎貢獻或提供建議LUL (<a href="https://github.com/WuSeagal/Twitch-NPC-Talk-Displayer" target="_blank">可以參考GITHUB</a>)
       </div>
@@ -33,42 +37,44 @@
         <!-- 訊息篩選區域 -->
         <div class="fancy-card-wrapper">
           <div class="fancy-title">
-            篩選訊息
+            篩選發言用戶
           </div>
           <div class="fancy-card">
             <!-- 黑名單 -->
             <div class="form-group">
-              <label for="blacklist">黑名單</label>
+              <label for="blacklist">黑名單：不想顯示的用戶，在此輸入帳號並以","來分隔複數帳號</label>
+              <br />
               <input 
                 type="text" 
                 id="blacklist" 
                 v-model="blacklistInput"
-                placeholder="輸入目標用戶帳號，用逗號分隔" 
+                placeholder="輸入不想顯示的用戶"
               />
             </div>
             <!-- 用戶篩選 -->
             <div class="form-group">
               <label>
                 <input type="checkbox" v-model="isLimitDisplay" />
-                啟用用戶篩選
+                只顯示符合條件的用戶發言
               </label>
             </div>
             <!-- 若啟用用戶篩選則可調整 -->
             <div :class="{ 'disabled-section': !isLimitDisplay }">
               <!-- 白名單 -->
               <div class="form-group">
-                <label for="whitelist">白名單</label>
+                <label for="whitelist">白名單：指定想顯示的用戶，在此輸入帳號並以","來分隔複數帳號</label>
+                <br />
                 <input 
                   type="text" 
                   id="whitelist" 
                   v-model="whitelistInput"
-                  placeholder="輸入目標用戶帳號，用逗號分隔"
+                  placeholder="輸入想顯示的用戶"
                   :disabled="!isLimitDisplay"
                 />
               </div>
               <!-- 身份複選 -->
               <div class="form-group">
-                <label>身份篩選</label>
+                <label>身份/徽章篩選</label>
                 <div class="roles-flex">
                   <label><input type="checkbox" v-model="displayRoles" value="1" :disabled="!isLimitDisplay" /> 頻道擁有者</label>
                   <label><input type="checkbox" v-model="displayRoles" value="2" :disabled="!isLimitDisplay" /> Mod(大劍)</label>
@@ -84,7 +90,7 @@
               <div class="form-group">
                 <label>
                   <input type="checkbox" v-model="displaySubs" :disabled="!isLimitDisplay" />
-                  已訂閱：
+                  顯示已訂閱
                 </label>
                 <label>
                   <input
@@ -94,7 +100,7 @@
                   placeholder="輸入月份"
                   :disabled="!isLimitDisplay || !displaySubs"
                   />
-                  個月
+                  個月以上的用戶
                 </label>
                 
               </div>
@@ -102,18 +108,43 @@
               <div class="form-group">
                 <label>
                   <input type="checkbox" v-model="displayBits" :disabled="!isLimitDisplay" />
-                  小奇點 - 數量
+                  顯示獎勵小奇點
                 </label>
                 <select 
                   :value="cheerBitsLimitInput" 
                   @change="e => cheerBitsLimitInput = (e.target as HTMLSelectElement).value" 
                   :disabled="!isLimitDisplay || !displayBits"
                 >
-                  <option value="">請選擇</option>
+                  <option value="1">1+</option>
                   <option value="100">100+</option>
-                  <option value="500">500+</option>
                   <option value="1000">1000+</option>
+                  <option value="5000">5000+</option>
+                  <option value="10000">10000+</option>
+                  <option value="25000">25000+</option>
+                  <option value="50000">50000+</option>
+                  <option value="75000">75000+</option>
+                  <option value="100000">100000+</option>
+                  <option value="200000">200000+</option>
+                  <option value="300000">300000+</option>
+                  <option value="400000">400000+</option>
+                  <option value="500000">500000+</option>
+                  <option value="600000">600000+</option>
+                  <option value="700000">700000+</option>
+                  <option value="800000">800000+</option>
+                  <option value="900000">900000+</option>
+                  <option value="1000000">1000000+</option>
+                  <option value="1250000">1250000+</option>
+                  <option value="1500000">1500000+</option>
+                  <option value="1750000">1750000+</option>
+                  <option value="2000000">2000000+</option>
+                  <option value="2500000">2500000+</option>
+                  <option value="3000000">3000000+</option>
+                  <option value="3500000">3500000+</option>
+                  <option value="4000000">4000000+</option>
+                  <option value="4500000">4500000+</option>
+                  <option value="5000000">5000000+</option>
                 </select>
+                以上的用戶
               </div>
             </div>
           </div>
@@ -130,7 +161,8 @@
               <!-- 顯示名稱 showName -->
               <div class="form-group">
                 <label>
-                  👤 顯示使用者名稱：
+                  👤 開頭顯示使用者名稱：
+                  <br />
                   <select v-model="showName">
                     <option value="true">顯示</option>
                     <option value="false">不顯示</option>
@@ -140,34 +172,39 @@
               <!-- 每字顯示間隔 typingSpeed -->
               <div class="form-group">
                 <label>
-                  🦎 每字顯示間隔（毫秒）：
+                  🦎 每字輸入間隔：
+                  <br />
                   <input type="number" v-model="typingSpeed" placeholder="預設50毫秒" /> 毫秒
                 </label>
               </div>
               <div class="form-group">
                 <label>
-                  🦎 換行間隔（幾秒換一行）：
+                  🦎 每行間隔（長訊息分行）：
+                  <br />
                   <input type="number" v-model="messageLineDuration" placeholder="預設5秒" /> 秒
                 </label>
               </div>
               <!-- 訊息呈現時長 messageDuration -->
               <div class="form-group">
                 <label>
-                  ⏱️ 訊息呈現時長（打字完後停留）：
+                  ⏱️ 訊息間隔（訊息停留多久換下一則）：
+                  <br />
                   <input type="number" v-model="messageDuration" placeholder="預設10秒" /> 秒
                 </label>
               </div>
               <!-- 訊息停留時長 lastMessageDuration -->
               <div class="form-group">
                 <label>
-                  ⏱️ 最後一則訊息停留秒數（0 = 永久）：
-                  <input type="number" v-model="lastMessageDuration" placeholder="預設0，永久停留" /> 秒
+                  ⏱️ 末尾訊息停留（沒有新訊息時，多久後消失）：
+                  <br />
+                  <input type="number" v-model="lastMessageDuration" placeholder="預設0=永久停留" /> 秒
                 </label>
               </div>
               <!-- 畫面最多保留幾則訊息 maxMessageAwait -->
               <div class="form-group">
                 <label>
-                  🗃️ 畫面最多保留訊息數量（5~30）：
+                  🗃️ 最多保留幾則訊息（超過筆數時，過舊的列隊中訊息會移除）：
+                  <br />
                   <input 
                     type="number" 
                     v-model="maxMessageAwait"
@@ -189,6 +226,7 @@
               <div class="form-group">
                 <label>
                   🔠 文字大小（px）：
+                  <br />
                   <input type="number" v-model="fontSize" placeholder="預設12px" /> px
                 </label>
               </div>
@@ -196,6 +234,7 @@
               <div class="form-group">
                 <label>
                   🎨 文字顏色： {{ fontColor }}
+                  <br />
                   <input type="color" v-model="fontColor" />
                 </label>
               </div>
@@ -203,6 +242,7 @@
               <div class="form-group">
                 <label>
                   🅱️ 字體粗細：
+                  <br />
                   <select v-model="fontWeight">
                     <option value="normal">一般</option>
                     <option value="bold">粗體</option>
@@ -215,9 +255,9 @@
 
         <br />
         <br />
-        <button @click="copyUrl">📋 複製 OBS 用網址</button>
+        <button @click="copyUrl">📋 複製 OBS瀏覽器來源 網址</button>
         <p class="obs-url" v-if="obsUrl">✅ 複製成功！OBS 使用此網址：{{ obsUrl }}</p>
-        <button @click="testTypingEffect"> 測試訊息效果 </button>
+        <button @click="testTypingEffect"> 測試顯示效果 </button>
       </div>
       <ChatDisplay 
         ref="chatDisplayRef"
