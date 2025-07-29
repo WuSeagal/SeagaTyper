@@ -1,21 +1,18 @@
 <template>
   <div class="login-view">
     <div class="login-layout">
-      <h1>SeagaTalker TTV</h1>
+      <h1>SeagaTyper</h1>
       <div class="description-container">
-        這是一個for實況直播用顯示單行Twitch聊天室內容的瀏覽器來源產生器。
-        <br />
-        舊稱：Twitch NPC對話聊天室展示器
-        <br />
-        輸入Twitch頻道帳號並且調整設定，就能客製篩選接收的發言者&顯示樣式。
-        <br />
-        能夠一字一字像打字般呈現，並且只針對特定身分的聊天室發言進行呈現是本工具的特點。
-        <br />
-        有任何建議或疑難，都可以透過信箱<a href="mailto:seagal.wu@seagalogs.com">seagal.wu@seagalogs.com</a>
-        <br />
-        或<a href="https://seagalogs.com/" target="_blank">我的部落格-蜥嘎絡格室</a>來聯絡我。
-        <br />
-        本專案為開源開發中項目，尚未完工，歡迎貢獻或提供建議LUL (<a href="https://github.com/WuSeagal/Twitch-NPC-Talk-Displayer" target="_blank">可以參考GITHUB</a>)
+        <p>這是一個for實況直播用顯示單行Twitch聊天室內容的瀏覽器來源產生器。</p>
+        <p>舊稱：Twitch NPC對話聊天室展示器</p>
+        <p>輸入Twitch頻道帳號並且調整設定，就能客製篩選接收的發言者&顯示樣式。</p>
+        <p>能夠一字一字像打字般呈現，並且只針對特定身分的聊天室發言進行呈現是本工具的特點。</p>
+        <p>
+          有任何建議或疑難，都可以透過信箱<a href="mailto:seagal.wu@seagalogs.com">seagal.wu@seagalogs.com</a>
+          或<a href="https://seagalogs.com/" target="_blank">我的部落格-蜥嘎絡格室</a>來聯絡我。
+        </p>
+        <p>本專案為開源開發中項目，尚未完工，歡迎貢獻或提供建議LUL (<a href="https://github.com/WuSeagal/Twitch-NPC-Talk-Displayer" target="_blank">可以參考GITHUB</a>)</p>
+        <p><a href="/tutorial" class="tutorial-link">📚 查看使用教學 - 一步一步學習如何設定</a></p>
       </div>
       <div class="form-container">
         <!-- 頻道資訊 -->
@@ -413,6 +410,3 @@ function testTypingEffect() {
   chatDisplayRef.value?.testTypingEffect()
 }
 </script>
-
-<style scoped>
-</style>
