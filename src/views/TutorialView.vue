@@ -6,23 +6,18 @@
         <p>這個頁面將一步一步教您如何填寫表單來產生您想要的效果。</p>
         <p>跟著以下步驟操作，您將能夠輕鬆設置並使用 SeagaTyper 來展示您的 Twitch 聊天室內容。</p>
       </div>
-      
+
       <div class="form-container">
+        <button class="return-main-button primary-button" @click="goToMainPage">返回主頁面</button>
         <!-- 步驟 1 -->
         <div class="fancy-card-wrapper">
           <div class="fancy-title">
-            步驟 1: 設定頻道資訊
+            步驟一 設定SeagaTyper要抓哪個頻道的聊天室
           </div>
           <div class="fancy-card">
-            <p>首先，您需要輸入您的 Twitch 頻道帳號：</p>
-            <ol>
-              <li>在主頁面找到「頻道資訊」區塊</li>
-              <li>在「頻道帳號」欄位中輸入您的 Twitch 頻道名稱（例如：exampleChannel）</li>
-              <li>確保您輸入的是頻道網址最後的部分，而不是完整網址</li>
-            </ol>
-            <div class="tutorial-image-placeholder">
-              <!-- 未來可放置圖片 -->
-              <p>【未來將在此處放置頻道設定的截圖】</p>
+            <p>在Twitch找到想要抓的頻道的頻道擁有者帳號，可以從頻道網址最末段複製貼過來這邊，例如：想要抓 https://www.twitch.tv/wuseagal 的聊天室，就輸入wuseagal。</p>
+            <div class="tutorial-image">
+              <img src="/images/tutorials/tutorial-1-channel_example.png" alt="頻道設定範例" />
             </div>
           </div>
         </div>
@@ -30,95 +25,62 @@
         <!-- 步驟 2 -->
         <div class="fancy-card-wrapper">
           <div class="fancy-title">
-            步驟 2: 篩選發言用戶
+            步驟二 確認那些觀眾發言要出現在SeagaTyper
           </div>
           <div class="fancy-card">
-            <p>接下來，您可以設定要顯示哪些用戶的發言：</p>
-            <ol>
-              <li>如果您想要排除特定用戶，可以在「黑名單」欄位中輸入用戶名稱，多個用戶請用逗號分隔</li>
-              <li>如果您只想顯示特定用戶的發言，請勾選「只顯示符合條件的用戶發言」</li>
-              <li>勾選後，您可以：
-                <ul>
-                  <li>在「白名單」中輸入想要顯示的用戶名稱</li>
-                  <li>選擇要顯示的用戶身份（頻道擁有者、Mod、VIP等）</li>
-                  <li>設定是否顯示已訂閱用戶，以及訂閱月份的最低要求</li>
-                  <li>設定是否顯示獎勵小奇點的用戶，以及小奇點數量的最低要求</li>
-                </ul>
-              </li>
-            </ol>
-            <div class="tutorial-image-placeholder">
-              <!-- 未來可放置圖片 -->
-              <p>【未來將在此處放置用戶篩選設定的截圖】</p>
-            </div>
+            <ul>
+              <li><strong>黑名單：</strong> 在此輸入的觀眾帳號(用,分隔)的發言都不會出現。例如有用一些Bot帳號如Nightbot設在這邊，避免汙染發言呈現。</li>
+              <li><strong>只顯示符合條件的觀眾發言：</strong>勾選後，只有下方有選擇的白名單、身分徽章篩選、訂閱or小奇點條件有符合的才會出現。</li>
+              <li><strong>白名單：</strong>在此輸入的觀眾帳號(用,分隔)的發言都會出現。</li>
+              <li><strong>身分徽章篩選：</strong>觀眾具有勾選的身分徽章的話，發言就會出現。</li>
+              <li><strong>訂閱N個月：</strong>打勾後，觀眾總訂閱月數在設定數字以上的話發言就會出現。</li>
+              <li><strong>小奇點：</strong>打勾後，投設定數量以上的小奇點的觀眾的發言會出現。</li>
+            </ul>
           </div>
         </div>
         
         <!-- 步驟 3 -->
         <div class="fancy-card-wrapper">
           <div class="fancy-title">
-            步驟 3: 調整顯示設定
+            步驟三 調整訊息顯示相關設定
           </div>
           <div class="fancy-card">
-            <p>現在，您可以調整訊息的顯示方式：</p>
-            <ol>
-              <li>決定是否在訊息開頭顯示用戶名稱</li>
-              <li>設定每個字符顯示的間隔時間（打字效果的速度）</li>
-              <li>設定長訊息分行的間隔時間</li>
-              <li>設定訊息之間的間隔時間（一則訊息顯示多久後換下一則）</li>
-              <li>設定末尾訊息的停留時間（沒有新訊息時，多久後消失）</li>
-              <li>設定最多保留幾則訊息（超過筆數時，過舊的訊息會被移除）</li>
-            </ol>
-            <div class="tutorial-image-placeholder">
-              <!-- 未來可放置圖片 -->
-              <p>【未來將在此處放置顯示設定的截圖】</p>
-            </div>
+            <ul>
+              <li><strong>開頭顯示使用者名稱：</strong>是否開頭要顯示「觀眾聊天室顯示名稱：」再接著發言內容。</li>
+              <li><strong>每字輸入間隔：</strong>打字呈現的效果每隔多久出現下一個字。</li>
+              <li><strong>每行間隔：</strong>當字數在一行無法顯示時，SeagaTyper會分行顯示，一次顯示一行，每行之間顯示停留幾秒。</li>
+              <li><strong>訊息間隔：</strong>當訊息呈現完成後，如果已經有新的發言在等待顯示，會停留多久才顯示新的發言。</li>
+              <li><strong>末尾訊息停留：</strong>如果今天沒有新的發言在等待顯示，最後一則訊息會停留在畫面多久(設0秒的話會一直停留)。</li>
+              <li><strong>最多保留幾則訊息：</strong>今天如果聊天室有大量發言等待顯示，等待顯示的訊息的上限。超過上限時會先剔除排隊中最舊的訊息。</li>
+            </ul>
           </div>
         </div>
         
         <!-- 步驟 4 -->
         <div class="fancy-card-wrapper">
           <div class="fancy-title">
-            步驟 4: 調整文字設定
+            步驟四 調整顯示文字的設定
           </div>
           <div class="fancy-card">
-            <p>您可以自訂文字的外觀：</p>
-            <ol>
-              <li>設定文字大小（像素）</li>
-              <li>選擇文字顏色</li>
-              <li>選擇字體粗細（一般或粗體）</li>
-            </ol>
-            <div class="tutorial-image-placeholder">
-              <!-- 未來可放置圖片 -->
-              <p>【未來將在此處放置文字設定的截圖】</p>
-            </div>
+            <p>根據喜好設定文字大小、文字顏色與粗細程度，目前字型僅支援俐方體11號。</p>
           </div>
         </div>
         
         <!-- 步驟 5 -->
         <div class="fancy-card-wrapper">
           <div class="fancy-title">
-            步驟 5: 測試與使用
+            步驟五 輸出用於OBS瀏覽器來源的網址
           </div>
           <div class="fancy-card">
-            <p>完成設定後：</p>
             <ol>
-              <li>點擊「測試顯示效果」按鈕，查看設定的效果</li>
-              <li>確認效果符合預期後，點擊「複製 OBS瀏覽器來源 網址」按鈕</li>
-              <li>在 OBS 中添加一個「瀏覽器」來源</li>
-              <li>將複製的網址貼入 OBS 瀏覽器來源的 URL 欄位</li>
-              <li>調整瀏覽器來源的大小和位置</li>
-              <li>完成！現在您的直播中將顯示符合您設定的聊天訊息</li>
+              <li>可以先按「測試顯示效果」確認文字設定是否符合預期，也可以直接在目標頻道聊天室直接留言測試。</li>
+              <li>按下「複製 OBS瀏覽器來源 網址」即可複製網址(畫面上也會出現網址)。</li>
+              <li>OBS瀏覽器來源長度不限(盡量不要超過畫面長度)、寬度建議至少大於文字大小，網址就直接貼上即可。</li>
             </ol>
-            <div class="tutorial-image-placeholder">
-              <!-- 未來可放置圖片或影片 -->
-              <p>【未來將在此處放置 OBS 設定的截圖或影片】</p>
-            </div>
           </div>
         </div>
-        
-        <br />
-        <br />
-        <button @click="goToMainPage">返回主頁面</button>
+
+        <button class="return-main-button primary-button" @click="goToMainPage">返回主頁面</button>
       </div>
       
       <div class="copyright">

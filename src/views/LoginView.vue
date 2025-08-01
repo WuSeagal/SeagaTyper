@@ -12,8 +12,8 @@
           或<a href="https://seagalogs.com/" target="_blank">我的部落格-蜥嘎絡格室</a>來聯絡我。
         </p>
         <p>本專案為開源開發中項目，尚未完工，歡迎貢獻或提供建議LUL (<a href="https://github.com/WuSeagal/Twitch-NPC-Talk-Displayer" target="_blank">可以參考GITHUB</a>)</p>
-        <p><a href="/tutorial" class="tutorial-link">📚 查看使用教學 - 一步一步學習如何設定</a></p>
       </div>
+      <button class="primary-button" @click="goToTutorial">查看使用教學</button>
       <div class="form-container">
         <!-- 頻道資訊 -->
         <div class="fancy-card-wrapper">
@@ -252,7 +252,7 @@
 
         <br />
         <br />
-        <button @click="copyUrl">📋 複製 OBS瀏覽器來源 網址</button>
+        <button class="primary-button" @click="copyUrl">📋 複製 OBS瀏覽器來源 網址</button>
         <p class="obs-url" v-if="obsUrl">✅ 複製成功！OBS 使用此網址：{{ obsUrl }}</p>
         <button @click="testTypingEffect"> 測試顯示效果 </button>
       </div>
@@ -294,9 +294,16 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import ChatDisplay from '@/components/ChatDisplay.vue'
 import FooterAds from '@/components/FooterAds.vue'
 import { decodeConfig, encodeConfig, type DisplayConfig } from '@/utils/configEncoder'
+
+const router = useRouter()
+
+function goToTutorial() {
+  router.push('/tutorial')
+}
 
 const channel = ref('')
 const obsUrl = ref('')

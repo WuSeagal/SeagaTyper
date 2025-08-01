@@ -74,7 +74,12 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-  margin: 0.5em;
+  margin: 20px;
+}
+
+/* When buttons are vertically adjacent, their combined margin should be 20px */
+button + button {
+  margin-top: 0;
 }
 button:hover {
   border-color: #646cff;
@@ -126,7 +131,7 @@ button:focus-visible {
 }
 
 .description-container {
-  margin: 30px;
+  margin: 20px;
 }
 
 .form-container {
@@ -260,6 +265,26 @@ button:focus-visible {
   }
 }
 
+/* Primary button styles - used for important actions */
+.primary-button {
+  display: inline-block;
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 8px 16px;
+  background-color: #646cff;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background-color: #535bf2;
+  color: white;
+}
+
 /* Tutorial link styles */
 .tutorial-link {
   display: inline-block;
@@ -305,4 +330,8 @@ button:focus-visible {
 .fancy-card ol li::marker {
   display: inline-block;
   position: relative;
+}
+
+return-main-button {
+  margin: 20px;
 }
