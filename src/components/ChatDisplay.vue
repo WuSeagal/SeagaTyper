@@ -22,6 +22,7 @@ function logProps() {
     '打字速度': props.typingSpeed + 'ms',
     '字體大小': props.fontSize + 'px',
     '字體顏色': props.fontColor,
+    '字體': props.fontFamily,
     '字體粗細': props.fontWeight,
     '每行間隔': props.messageLineDuration + '秒',
     '訊息間隔': props.messageDuration + '秒',
@@ -73,7 +74,8 @@ let client: tmi.Client
 const fontStyle = computed(() => ({
   fontSize: `${props.fontSize}px`,
   color: props.fontColor,
-  fontWeight: props.fontWeight
+  fontWeight: props.fontWeight,
+  fontFamily: props.fontFamily
 }))
 
 watch(() => props.channel, (newChannel) => {

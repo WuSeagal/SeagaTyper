@@ -3,6 +3,7 @@ export interface DisplayConfig {
   ts: number            // typingSpeed
   fs: number            // fontSize
   fc: string            // fontColor
+  ff: string            // fontFamily
   fw: string            // fontWeight
   sn: boolean           // showName
   mld: number           // messageLineDuration

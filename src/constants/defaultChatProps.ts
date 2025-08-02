@@ -3,6 +3,7 @@ export const defaultChatProps = {
   fontSize: 12,
   fontColor: '#000000',
   fontWeight: 'normal',
+  fontFamily: "'Cubic 11', sans-serif",
   messageLineDuration: 5,
   messageDuration: 10,
   maxMessageAwait: 5,

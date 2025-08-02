@@ -276,6 +276,20 @@
                   </select>
                 </label>
               </div>
+              <!-- 字體選擇 fontFamily -->
+              <div class="form-group">
+                <label>
+                  🔤 字體選擇：
+                  <br />
+                  <select v-model="fontFamily">
+                    <option value="'Cubic 11', sans-serif">Cubic 11</option>
+                    <option value="'Noto Sans TC', sans-serif">Noto Sans TC</option>
+                    <option value="'微軟正黑體', sans-serif">微軟正黑體</option>
+                    <option value="'新細明體', serif">新細明體</option>
+                    <option value="'標楷體', serif">標楷體</option>
+                  </select>
+                </label>
+              </div>
             </div>
           </div>
         </div>
@@ -294,6 +308,7 @@
         :fontSize="fontSize"
         :fontColor="fontColor"
         :fontWeight="fontWeight"
+        :fontFamily="fontFamily"
         :messageDuration="messageDuration"
         :messageLineDuration="messageLineDuration"
         :lastMessageDuration="lastMessageDuration"
@@ -341,6 +356,7 @@ const typingSpeed = ref(50);
 const fontSize = ref(12);
 const fontColor = ref('#000000') // 預設黑色
 const fontWeight = ref('normal')  // 預設普通
+const fontFamily = ref("'Cubic 11', sans-serif") // 預設Cubic 11
 const messageLineDuration = ref(5);
 const messageDuration = ref(10);
 const maxMessageAwait = ref(5);
@@ -395,6 +411,7 @@ onMounted(() => {
       fontSize.value = config.fs || 12
       fontColor.value = config.fc || '#000000'
       fontWeight.value = config.fw || 'normal'
+      fontFamily.value = config.ff || "'Cubic 11', sans-serif"
       showName.value = config.sn ?? true
       messageLineDuration.value = config.mld || 5
       messageDuration.value = config.md || 10
@@ -418,6 +435,7 @@ function copyUrl() {
     ts: typingSpeed.value,
     fs: fontSize.value,
     fc: fontColor.value,
+    ff: fontFamily.value,
     fw: fontWeight.value,
     sn: showName.value,
     mld: messageLineDuration.value,
