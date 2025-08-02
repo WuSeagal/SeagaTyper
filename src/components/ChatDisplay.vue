@@ -15,6 +15,44 @@ import { defaultChatProps } from '@/constants/defaultChatProps';
 
 const props = withDefaults(defineProps<ChatProps>(), defaultChatProps)
 
+// 輸出參數的函數
+function logProps() {
+  console.log('ChatDisplay 參數：', {
+    '頻道': props.channel,
+    '打字速度': props.typingSpeed + 'ms',
+    '字體大小': props.fontSize + 'px',
+    '字體顏色': props.fontColor,
+    '字體粗細': props.fontWeight,
+    '每行間隔': props.messageLineDuration + '秒',
+    '訊息間隔': props.messageDuration + '秒',
+    '最多保留訊息數': props.maxMessageAwait,
+    '末尾訊息停留': props.lastMessageDuration + '秒',
+    '顯示用戶名': props.showName ? '是' : '否',
+    '限制顯示': props.isLimitDisplay ? '是' : '否',
+    '白名單': props.whiteList,
+    '顯示頻道擁有者': props.displayBroadcaster ? '是' : '否',
+    '顯示版主': props.displayMod ? '是' : '否',
+    '顯示VIP': props.displayVip ? '是' : '否',
+    '顯示創建者': props.displayFounder ? '是' : '否',
+    '顯示二級訂閱': props.displayTier2Sub ? '是' : '否',
+    '顯示三級訂閱': props.displayTier3Sub ? '是' : '否',
+    '顯示訂閱者': props.displaySubs ? '是' : '否',
+    '訂閱月數限制': props.subMonthsLimit,
+    '顯示小奇點': props.displayBits ? '是' : '否',
+    '小奇點限制': props.cheerBitsLimit,
+    '黑名單': props.blackList
+  })
+}
+
+// 初始化時輸出傳入的參數
+logProps()
+
+// 監聽所有props的變化，當任何prop改變時重新輸出
+watch(() => ({ ...props }), () => {
+  console.log('設定已更新')
+  logProps()
+}, { deep: true })
+
 const typingContainer = ref<HTMLElement | null>(null)
 const currentDisplayName = ref('')
 const fullSegments = ref<(string)[]>([])
@@ -68,6 +106,12 @@ function setupClient() {
 }
 
 function displayNextMessage() {
+  // Clear any existing timeout to prevent issues with previous timeouts
+  if (clearMessageTimeout) {
+    window.clearTimeout(clearMessageTimeout)
+    clearMessageTimeout = undefined
+  }
+
   const next = messageQueue.value.shift()
   if (!next) {
     isTyping = false
@@ -76,6 +120,10 @@ function displayNextMessage() {
       clearMessageTimeout = window.setTimeout(() => {
         displayedHtml.value = ''
         currentDisplayName.value = ''
+        // Clear the actual DOM content as well
+        if (typingContainer.value) {
+          typingContainer.value.innerHTML = ''
+        }
       }, props.lastMessageDuration * 1000)
     }
     return
@@ -139,6 +187,12 @@ function parseMessageWithEmotes(message: string, emotes: any): string[] {
 
 function startTypingEffect(onFinish?: () => void) {
   if (typingInterval) clearInterval(typingInterval)
+  
+  // Also clear any message timeout when starting to type a new message
+  if (clearMessageTimeout) {
+    window.clearTimeout(clearMessageTimeout)
+    clearMessageTimeout = undefined
+  }
 
   const container = typingContainer.value
   if (!container) return

@@ -92,9 +92,9 @@
                 <label>
                   <input
                   type="number"
-                  v-model="subMonthsLimit"
-                  min="0"
-                  placeholder="輸入月份"
+                  :value="subMonthsLimit"
+                  @input="(e) => handleNumberInput(e, (v) => subMonthsLimit = v, { min: 1, max: 9999, decimalPlaces: 0, defaultValue: 1 })"
+                  placeholder="1~9999"
                   :disabled="!isLimitDisplay || !displaySubs"
                   />
                   個月以上的用戶
@@ -158,7 +158,7 @@
               <!-- 顯示名稱 showName -->
               <div class="form-group">
                 <label>
-                  👤 開頭顯示使用者名稱：
+                  👤 發言使用者名稱：
                   <br />
                   <select v-model="showName">
                     <option value="true">顯示</option>
@@ -169,45 +169,70 @@
               <!-- 每字顯示間隔 typingSpeed -->
               <div class="form-group">
                 <label>
-                  🦎 每字輸入間隔：
+                  🦎 打字顯示速度：
                   <br />
-                  <input type="number" v-model="typingSpeed" placeholder="預設50毫秒" /> 毫秒
+                  每字
+                  <input
+                      type="number"
+                      :value="typingSpeed"
+                      @input="(e) => handleNumberInput(e, (v) => typingSpeed = v, { min: 1, max: 10000, decimalPlaces: 0, defaultValue: 50 })"
+                      placeholder="1~10000"
+                  /> 毫秒
                 </label>
               </div>
               <div class="form-group">
                 <label>
-                  🦎 每行間隔（長訊息分行）：
+                  🦎 同訊息每行顯示間隔時間：
                   <br />
-                  <input type="number" v-model="messageLineDuration" placeholder="預設5秒" /> 秒
+                  <input
+                      type="number"
+                      :value="messageLineDuration"
+                      @input="(e) => handleNumberInput(e, (v) => messageLineDuration = v, { min: 1, max: 3600, decimalPlaces: 0, defaultValue: 5 })"
+                      placeholder="1~3600"
+                  /> 秒
                 </label>
               </div>
               <!-- 訊息呈現時長 messageDuration -->
               <div class="form-group">
                 <label>
-                  ⏱️ 訊息間隔（訊息停留多久換下一則）：
+                  ⏱️ 每則訊息間隔：
                   <br />
-                  <input type="number" v-model="messageDuration" placeholder="預設10秒" /> 秒
+                  <input
+                      type="number"
+                      :value="messageDuration"
+                      @input="(e) => handleNumberInput(e, (v) => messageDuration = v, { min: 1, max: 3600, decimalPlaces: 0, defaultValue: 10 })"
+                      placeholder="1~3600"
+                  /> 秒
                 </label>
               </div>
               <!-- 訊息停留時長 lastMessageDuration -->
               <div class="form-group">
                 <label>
-                  ⏱️ 末尾訊息停留（沒有新訊息時，多久後消失）：
+                  ⏱️ 末尾訊息停留畫面時長（0=永遠停留）：
                   <br />
-                  <input type="number" v-model="lastMessageDuration" placeholder="預設0=永久停留" /> 秒
+                  <input
+                      type="number"
+                      :value="lastMessageDuration"
+                      @input="(e) => handleNumberInput(e, (v) => lastMessageDuration = v, { min: 0, max: 3600, decimalPlaces: 0, defaultValue: 0 })"
+                      placeholder="0~3600, 0=永遠存在"
+                  /> 秒
                 </label>
               </div>
               <!-- 畫面最多保留幾則訊息 maxMessageAwait -->
               <div class="form-group">
                 <label>
-                  🗃️ 最多保留幾則訊息（超過筆數時，過舊的列隊中訊息會移除）：
+                  🗃️ 待顯示佇列訊息數上限
                   <br />
-                  <input 
-                    type="number" 
-                    v-model="maxMessageAwait"
-                    :min="5"
-                    :max="30"
-                    placeholder="預設5，範圍5~30" /> 筆
+                  （超過筆數時，會先刪除等待中最舊的訊息）：
+                  <br />
+                  <input
+                      type="number"
+                      :value="maxMessageAwait"
+                      @input="(e) => handleNumberInput(e, (v) => maxMessageAwait = v, { min: 5, max: 999, decimalPlaces: 0, defaultValue: 5 })"
+                      :min="5"
+                      :max="999"
+                      placeholder="5~999"
+                  /> 筆
                 </label>
               </div>
               
@@ -224,7 +249,12 @@
                 <label>
                   🔠 文字大小（px）：
                   <br />
-                  <input type="number" v-model="fontSize" placeholder="預設12px" /> px
+                  <input
+                      type="number"
+                      :value="fontSize"
+                      @input="(e) => handleNumberInput(e, (v) => fontSize = v, { min: 1, max: 9999, decimalPlaces: 0, defaultValue: 12 })"
+                      placeholder="1~9999"
+                  /> px
                 </label>
               </div>
               <!-- 文字顏色 fontColor -->
@@ -416,4 +446,43 @@ const chatDisplayRef = ref<InstanceType<typeof ChatDisplay> | null>(null)
 function testTypingEffect() {
   chatDisplayRef.value?.testTypingEffect()
 }
+
+// 通用數字輸入處理函式
+function handleNumberInput(
+    event: Event,
+    setValue: (value: number) => void,
+    options: {
+      min: number
+      max: number
+      decimalPlaces?: number // 小數位數，0 表示整數
+      defaultValue?: number // 無效時的預設值
+    }
+) {
+  const target = event.target as HTMLInputElement
+  let value = Number(target.value)
+
+  // 如果不是有效數字，使用預設值或最小值
+  if (isNaN(value)) {
+    value = options.defaultValue ?? options.min
+  }
+
+  // 處理小數位數
+  if (options.decimalPlaces === 0) {
+    value = Math.floor(value) // 整數：去掉小數部分
+  } else if (options.decimalPlaces && options.decimalPlaces > 0) {
+    value = Number(value.toFixed(options.decimalPlaces)) // 保留指定小數位數
+  }
+
+  // 限制範圍
+  if (value < options.min) {
+    value = options.min
+  } else if (value > options.max) {
+    value = options.max
+  }
+
+  setValue(value)
+  // 立即更新 input 顯示的值
+  target.value = value.toString()
+}
+
 </script>
