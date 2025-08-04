@@ -282,11 +282,12 @@
                   🔤 字體選擇：
                   <br />
                   <select v-model="fontFamily">
-                    <option value="'Cubic 11', sans-serif">Cubic 11</option>
-                    <option value="'Noto Sans TC', sans-serif">Noto Sans TC</option>
-                    <option value="'微軟正黑體', sans-serif">微軟正黑體</option>
-                    <option value="'新細明體', serif">新細明體</option>
-                    <option value="'標楷體', serif">標楷體</option>
+                    <option value="'Cubic 11', sans-serif">俐方體11號(預設)</option>
+                    <option value="'Mantou Sans', sans-serif">饅頭黑體</option>
+                    <option value="'Noto Sans TC', sans-serif">思源黑體(Noto Sans TC)</option>
+                    <option value="'Microsoft JhengHei', sans-serif">微軟正黑體</option>
+                    <option value="'PMingLiU', serif">新細明體</option>
+                    <option value="'DFKai-sb', serif">標楷體</option>
                   </select>
                 </label>
               </div>
