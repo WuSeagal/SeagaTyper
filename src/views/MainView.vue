@@ -104,34 +104,34 @@
                   @change="e => cheerBitsLimitInput = (e.target as HTMLSelectElement).value" 
                   :disabled="!isLimitDisplay || !displayBits"
                 >
-                  <option value="1">1+</option>
-                  <option value="100">100+</option>
-                  <option value="1000">1000+</option>
-                  <option value="5000">5000+</option>
-                  <option value="10000">10000+</option>
-                  <option value="25000">25000+</option>
-                  <option value="50000">50000+</option>
-                  <option value="75000">75000+</option>
-                  <option value="100000">100000+</option>
-                  <option value="200000">200000+</option>
-                  <option value="300000">300000+</option>
-                  <option value="400000">400000+</option>
-                  <option value="500000">500000+</option>
-                  <option value="600000">600000+</option>
-                  <option value="700000">700000+</option>
-                  <option value="800000">800000+</option>
-                  <option value="900000">900000+</option>
-                  <option value="1000000">1000000+</option>
-                  <option value="1250000">1250000+</option>
-                  <option value="1500000">1500000+</option>
-                  <option value="1750000">1750000+</option>
-                  <option value="2000000">2000000+</option>
-                  <option value="2500000">2500000+</option>
-                  <option value="3000000">3000000+</option>
-                  <option value="3500000">3500000+</option>
-                  <option value="4000000">4000000+</option>
-                  <option value="4500000">4500000+</option>
-                  <option value="5000000">5000000+</option>
+                  <option value="1">1點</option>
+                  <option value="100">100點</option>
+                  <option value="1000">1000點</option>
+                  <option value="5000">5000點</option>
+                  <option value="10000">10000點</option>
+                  <option value="25000">25000點</option>
+                  <option value="50000">50000點</option>
+                  <option value="75000">75000點</option>
+                  <option value="100000">100000點</option>
+                  <option value="200000">200000點</option>
+                  <option value="300000">300000點</option>
+                  <option value="400000">400000點</option>
+                  <option value="500000">500000點</option>
+                  <option value="600000">600000點</option>
+                  <option value="700000">700000點</option>
+                  <option value="800000">800000點</option>
+                  <option value="900000">900000點</option>
+                  <option value="1000000">1000000點</option>
+                  <option value="1250000">1250000點</option>
+                  <option value="1500000">1500000點</option>
+                  <option value="1750000">1750000點</option>
+                  <option value="2000000">2000000點</option>
+                  <option value="2500000">2500000點</option>
+                  <option value="3000000">3000000點</option>
+                  <option value="3500000">3500000點</option>
+                  <option value="4000000">4000000點</option>
+                  <option value="4500000">4500000點</option>
+                  <option value="5000000">5000000點</option>
                 </select>
                 以上的用戶
               </div>
@@ -358,7 +358,7 @@ const displayRoles = ref<number[]>([]);
 const displaySubs = ref(false);
 const subMonthsLimit = ref(0);
 const displayBits = ref(false);
-const cheerBitsLimitInput = ref<string>('');
+const cheerBitsLimitInput = ref<string>('1');
 
 const blacklistInput = ref('');
 const whitelistInput = ref('');
@@ -380,10 +380,10 @@ watch(whitelistInput, (val) => {
 const cheerBitsLimit = computed<number>({
   get() {
     const val = Number(cheerBitsLimitInput.value)
-    return isNaN(val) || cheerBitsLimitInput.value === '' ? 0 : val
+    return isNaN(val) || cheerBitsLimitInput.value === '' ? 1 : val
   },
   set(val: number | null) {
-    cheerBitsLimitInput.value = val === 0 ? '' : String(val)
+    cheerBitsLimitInput.value = val === 0 ? '1' : String(val)
   }
 })
 
