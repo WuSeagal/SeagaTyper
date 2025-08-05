@@ -66,14 +66,14 @@
               <div class="form-group">
                 <label>身份/徽章篩選</label>
                 <div class="roles-flex">
-                  <label><input type="checkbox" v-model="displayRoles" value="1" :disabled="!isLimitDisplay" /> 頻道擁有者</label>
-                  <label><input type="checkbox" v-model="displayRoles" value="2" :disabled="!isLimitDisplay" /> Mod(大劍)</label>
-                  <label><input type="checkbox" v-model="displayRoles" value="3" :disabled="!isLimitDisplay" /> VIP</label>
+                  <label><input type="checkbox" v-model="displayRoles" :value="1" :disabled="!isLimitDisplay" /> 頻道擁有者</label>
+                  <label><input type="checkbox" v-model="displayRoles" :value="2" :disabled="!isLimitDisplay" /> Mod(大劍)</label>
+                  <label><input type="checkbox" v-model="displayRoles" :value="3" :disabled="!isLimitDisplay" /> VIP</label>
                 </div>
                 <div class="roles-flex">
-                  <label><input type="checkbox" v-model="displayRoles" value="4" :disabled="!isLimitDisplay" /> 創建者</label>
-                  <label><input type="checkbox" v-model="displayRoles" value="5" :disabled="!isLimitDisplay" /> 層級2訂閱</label>
-                  <label><input type="checkbox" v-model="displayRoles" value="6" :disabled="!isLimitDisplay" /> 層級3訂閱</label>
+                  <label><input type="checkbox" v-model="displayRoles" :value="4" :disabled="!isLimitDisplay" /> 創建者</label>
+                  <label><input type="checkbox" v-model="displayRoles" :value="5" :disabled="!isLimitDisplay" /> 層級2訂閱</label>
+                  <label><input type="checkbox" v-model="displayRoles" :value="6" :disabled="!isLimitDisplay" /> 層級3訂閱</label>
                 </div>
               </div>
               <div class="form-group">
