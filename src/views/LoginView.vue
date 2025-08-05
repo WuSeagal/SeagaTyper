@@ -15,7 +15,6 @@
       </div>
       <a href="/tutorial" class="primary-button">查看使用教學</a>
       <div class="form-container">
-        <!-- 頻道資訊 -->
         <div class="fancy-card-wrapper">
           <div class="fancy-title">
             頻道資訊
@@ -30,14 +29,12 @@
             </label>
           </div>
         </div>
-        
-        <!-- 訊息篩選區域 -->
+
         <div class="fancy-card-wrapper">
           <div class="fancy-title">
             篩選發言用戶
           </div>
           <div class="fancy-card">
-            <!-- 黑名單 -->
             <div class="form-group">
               <label for="blacklist">黑名單：不想顯示的用戶，在此輸入帳號並以","來分隔複數帳號</label>
               <br />
@@ -48,16 +45,13 @@
                 placeholder="輸入不想顯示的用戶"
               />
             </div>
-            <!-- 用戶篩選 -->
             <div class="form-group">
               <label>
                 <input type="checkbox" v-model="isLimitDisplay" />
                 只顯示符合條件的用戶發言
               </label>
             </div>
-            <!-- 若啟用用戶篩選則可調整 -->
             <div :class="{ 'disabled-section': !isLimitDisplay }">
-              <!-- 白名單 -->
               <div class="form-group">
                 <label for="whitelist">白名單：指定想顯示的用戶，在此輸入帳號並以","來分隔複數帳號</label>
                 <br />
@@ -69,7 +63,6 @@
                   :disabled="!isLimitDisplay"
                 />
               </div>
-              <!-- 身份複選 -->
               <div class="form-group">
                 <label>身份/徽章篩選</label>
                 <div class="roles-flex">
@@ -83,7 +76,6 @@
                   <label><input type="checkbox" v-model="displayRoles" value="6" :disabled="!isLimitDisplay" /> 層級3訂閱</label>
                 </div>
               </div>
-              <!-- 訂閱月份 -->
               <div class="form-group">
                 <label>
                   <input type="checkbox" v-model="displaySubs" :disabled="!isLimitDisplay" />
@@ -92,16 +84,16 @@
                 <label>
                   <input
                   type="number"
+                  class="number-short"
                   :value="subMonthsLimit"
-                  @input="(e) => handleNumberInput(e, (v) => subMonthsLimit = v, { min: 1, max: 9999, decimalPlaces: 0, defaultValue: 1 })"
-                  placeholder="1~9999"
+                  @input="(e) => handleNumberInput(e, (v) => subMonthsLimit = v, { min: 1, max: 999, decimalPlaces: 0, defaultValue: 1 })"
+                  placeholder="1~999"
                   :disabled="!isLimitDisplay || !displaySubs"
                   />
                   個月以上的用戶
                 </label>
                 
               </div>
-              <!-- 小奇點數量 -->
               <div class="form-group">
                 <label>
                   <input type="checkbox" v-model="displayBits" :disabled="!isLimitDisplay" />
@@ -147,15 +139,12 @@
           </div>
         </div>
 
-        <!-- 顯示相關設定 -->
         <div class="cols2-fancy-card-container">
-          <!-- 顯示時間設定 -->
           <div class="fancy-card-wrapper">
             <div class="fancy-title">
               顯示設定
             </div>
             <div class="fancy-card">
-              <!-- 顯示名稱 showName -->
               <div class="form-group">
                 <label>
                   👤 發言使用者名稱：
@@ -166,7 +155,6 @@
                   </select>
                 </label>
               </div>
-              <!-- 每字顯示間隔 typingSpeed -->
               <div class="form-group">
                 <label>
                   🦎 打字顯示速度：
@@ -174,6 +162,7 @@
                   每字
                   <input
                       type="number"
+                      class="number-medium"
                       :value="typingSpeed"
                       @input="(e) => handleNumberInput(e, (v) => typingSpeed = v, { min: 1, max: 10000, decimalPlaces: 0, defaultValue: 50 })"
                       placeholder="1~10000"
@@ -186,39 +175,39 @@
                   <br />
                   <input
                       type="number"
+                      class="number-medium"
                       :value="messageLineDuration"
                       @input="(e) => handleNumberInput(e, (v) => messageLineDuration = v, { min: 1, max: 3600, decimalPlaces: 0, defaultValue: 5 })"
                       placeholder="1~3600"
                   /> 秒
                 </label>
               </div>
-              <!-- 訊息呈現時長 messageDuration -->
               <div class="form-group">
                 <label>
                   ⏱️ 每則訊息間隔：
                   <br />
                   <input
                       type="number"
+                      class="number-medium"
                       :value="messageDuration"
                       @input="(e) => handleNumberInput(e, (v) => messageDuration = v, { min: 1, max: 3600, decimalPlaces: 0, defaultValue: 10 })"
                       placeholder="1~3600"
                   /> 秒
                 </label>
               </div>
-              <!-- 訊息停留時長 lastMessageDuration -->
               <div class="form-group">
                 <label>
                   ⏱️ 末尾訊息停留畫面時長（0=永遠停留）：
                   <br />
                   <input
                       type="number"
+                      class="number-medium"
                       :value="lastMessageDuration"
                       @input="(e) => handleNumberInput(e, (v) => lastMessageDuration = v, { min: 0, max: 3600, decimalPlaces: 0, defaultValue: 0 })"
                       placeholder="0~3600, 0=永遠存在"
                   /> 秒
                 </label>
               </div>
-              <!-- 畫面最多保留幾則訊息 maxMessageAwait -->
               <div class="form-group">
                 <label>
                   🗃️ 待顯示佇列訊息數上限
@@ -227,6 +216,7 @@
                   <br />
                   <input
                       type="number"
+                      class="number-short"
                       :value="maxMessageAwait"
                       @input="(e) => handleNumberInput(e, (v) => maxMessageAwait = v, { min: 5, max: 999, decimalPlaces: 0, defaultValue: 5 })"
                       :min="5"
@@ -238,26 +228,24 @@
               
             </div>
           </div>
-          <!-- 文字相關設定 -->
           <div class="fancy-card-wrapper">
             <div class="fancy-title">
               文字設定
             </div>
             <div class="fancy-card">
-              <!-- 文字大小 fontSize -->
               <div class="form-group">
                 <label>
                   🔠 文字大小（px）：
                   <br />
                   <input
                       type="number"
+                      class="number-medium"
                       :value="fontSize"
                       @input="(e) => handleNumberInput(e, (v) => fontSize = v, { min: 1, max: 9999, decimalPlaces: 0, defaultValue: 12 })"
                       placeholder="1~9999"
                   /> px
                 </label>
               </div>
-              <!-- 文字顏色 fontColor -->
               <div class="form-group">
                 <label>
                   🎨 文字顏色： {{ fontColor }}
@@ -265,7 +253,6 @@
                   <input type="color" v-model="fontColor" />
                 </label>
               </div>
-              <!-- 字體粗細 fontWeight -->
               <div class="form-group">
                 <label>
                   🅱️ 字體粗細：
@@ -276,7 +263,6 @@
                   </select>
                 </label>
               </div>
-              <!-- 字體選擇 fontFamily -->
               <div class="form-group">
                 <label>
                   🔤 字體選擇：
@@ -355,9 +341,9 @@ const channel = ref('')
 const obsUrl = ref('')
 const typingSpeed = ref(50);
 const fontSize = ref(12);
-const fontColor = ref('#000000') // 預設黑色
-const fontWeight = ref('normal')  // 預設普通
-const fontFamily = ref("'Cubic 11', sans-serif") // 預設Cubic 11
+const fontColor = ref('#000000')
+const fontWeight = ref('normal')
+const fontFamily = ref("'Cubic 11', sans-serif")
 const messageLineDuration = ref(5);
 const messageDuration = ref(10);
 const maxMessageAwait = ref(5);
@@ -466,30 +452,27 @@ function testTypingEffect() {
   chatDisplayRef.value?.testTypingEffect()
 }
 
-// 通用數字輸入處理函式
 function handleNumberInput(
     event: Event,
     setValue: (value: number) => void,
     options: {
       min: number
       max: number
-      decimalPlaces?: number // 小數位數，0 表示整數
-      defaultValue?: number // 無效時的預設值
+      decimalPlaces?: number
+      defaultValue?: number
     }
 ) {
   const target = event.target as HTMLInputElement
   let value = Number(target.value)
 
-  // 如果不是有效數字，使用預設值或最小值
   if (isNaN(value)) {
     value = options.defaultValue ?? options.min
   }
 
-  // 處理小數位數
   if (options.decimalPlaces === 0) {
-    value = Math.floor(value) // 整數：去掉小數部分
+    value = Math.floor(value)
   } else if (options.decimalPlaces && options.decimalPlaces > 0) {
-    value = Number(value.toFixed(options.decimalPlaces)) // 保留指定小數位數
+    value = Number(value.toFixed(options.decimalPlaces))
   }
 
   // 限制範圍
@@ -500,7 +483,6 @@ function handleNumberInput(
   }
 
   setValue(value)
-  // 立即更新 input 顯示的值
   target.value = value.toString()
 }
 
