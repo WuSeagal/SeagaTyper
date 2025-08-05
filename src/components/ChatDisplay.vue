@@ -267,6 +267,36 @@ onMounted(setupClient)
 
 function checkTags(tags: tmi.ChatUserstate) {
   const username = tags['username'];
+
+  console.log('解析前User資訊:', {
+    username: username,
+    'display-name': tags['display-name'],
+    mod: tags.mod,
+    vip: tags.vip,
+    badges: tags.badges,
+    'badge-info': tags['badge-info'],
+    subscriber: tags.subscriber,
+    'user-type': tags['user-type'],
+    emotes: tags.emotes,
+    'room-id': tags['room-id'],
+    'user-id': tags['user-id']
+  });
+
+  const subTier = Math.floor(Number(tags['badges']?.subscriber) / 1000); // 訂閱層級：1, 2, 3
+  const subMonth = Number(Number(tags['badge-info']?.subscriber) % 1000 || tags['badge-info']?.founder || 0); // 總訂閱月份
+  const donatedBits = Number(tags['badges']?.bits) || 0;
+
+  console.log('解析後的User資訊:', {
+    subTier: subTier,
+    subMonth: subMonth,
+    donatedBits: donatedBits,
+    isBroadcaster: !!tags['badges']?.broadcaster,
+    isMod: !!(tags.mod || tags['badges']?.moderator),
+    isVip: !!(tags.vip || tags['badges']?.vip),
+    isFounder: !!tags['badges']?.founder
+  });
+
+
   // 黑名單(username)
   if (props.blackList && username && 
   props.blackList.map(name => name).includes(username)) {
@@ -298,8 +328,6 @@ function checkTags(tags: tmi.ChatUserstate) {
     return true;
   }
   // 層級2/層級3訂閱 和訂閱時長
-  const subTier = Math.floor(Number(tags['badges']?.subscriber) / 1000); // 訂閱層級：1, 2, 3
-  const subMonth = Number(tags['badge-info']?.subscriber) % 1000; // 總訂閱月份
   if (props.displayTier2Sub && subTier === 2) {
     return true;
   }
@@ -310,7 +338,6 @@ function checkTags(tags: tmi.ChatUserstate) {
     return true;
   }
   // 小奇點
-  const donatedBits = Number(tags['badges']?.bits);
   if (props.displayBits && donatedBits >= props.cheerBitsLimit) {
     return true;
   }
