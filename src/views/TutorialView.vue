@@ -1,6 +1,6 @@
 <template>
-  <div class="login-view">
-    <div class="login-layout">
+  <div class="main-view">
+    <div class="main-layout">
       <h1>SeagaTyper 使用教學</h1>
       <div class="description-container">
         <p>本頁面將帶您操作SeagaTyper的各個設定怎麼調整，以及設定完後怎麼在OBS瀏覽器來源進行使用。</p>

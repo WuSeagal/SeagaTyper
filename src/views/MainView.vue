@@ -1,6 +1,6 @@
 <template>
-  <div class="login-view">
-    <div class="login-layout">
+  <div class="main-view">
+    <div class="main-layout">
       <h1>SeagaTyper</h1>
       <div class="description-container">
         <p>SeagaTyper是一個幫助實況主的Twitch聊天室單行式顯示工具，可以產生Twitch聊天室內容進行單行顯示的網址套用在OBS瀏覽器來源。</p>
