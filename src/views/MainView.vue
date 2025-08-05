@@ -99,41 +99,43 @@
                   <input type="checkbox" v-model="displayBits" :disabled="!isLimitDisplay" />
                   顯示獎勵小奇點
                 </label>
-                <select 
-                  :value="cheerBitsLimitInput" 
-                  @change="e => cheerBitsLimitInput = (e.target as HTMLSelectElement).value" 
-                  :disabled="!isLimitDisplay || !displayBits"
-                >
-                  <option value="1">1點</option>
-                  <option value="100">100點</option>
-                  <option value="1000">1000點</option>
-                  <option value="5000">5000點</option>
-                  <option value="10000">10000點</option>
-                  <option value="25000">25000點</option>
-                  <option value="50000">50000點</option>
-                  <option value="75000">75000點</option>
-                  <option value="100000">100000點</option>
-                  <option value="200000">200000點</option>
-                  <option value="300000">300000點</option>
-                  <option value="400000">400000點</option>
-                  <option value="500000">500000點</option>
-                  <option value="600000">600000點</option>
-                  <option value="700000">700000點</option>
-                  <option value="800000">800000點</option>
-                  <option value="900000">900000點</option>
-                  <option value="1000000">1000000點</option>
-                  <option value="1250000">1250000點</option>
-                  <option value="1500000">1500000點</option>
-                  <option value="1750000">1750000點</option>
-                  <option value="2000000">2000000點</option>
-                  <option value="2500000">2500000點</option>
-                  <option value="3000000">3000000點</option>
-                  <option value="3500000">3500000點</option>
-                  <option value="4000000">4000000點</option>
-                  <option value="4500000">4500000點</option>
-                  <option value="5000000">5000000點</option>
-                </select>
-                以上的用戶
+                <label>
+                  <select
+                    :value="cheerBitsLimitInput"
+                    @change="e => cheerBitsLimitInput = (e.target as HTMLSelectElement).value"
+                    :disabled="!isLimitDisplay || !displayBits"
+                  >
+                    <option value="1">1點</option>
+                    <option value="100">100點</option>
+                    <option value="1000">1000點</option>
+                    <option value="5000">5000點</option>
+                    <option value="10000">10000點</option>
+                    <option value="25000">25000點</option>
+                    <option value="50000">50000點</option>
+                    <option value="75000">75000點</option>
+                    <option value="100000">100000點</option>
+                    <option value="200000">200000點</option>
+                    <option value="300000">300000點</option>
+                    <option value="400000">400000點</option>
+                    <option value="500000">500000點</option>
+                    <option value="600000">600000點</option>
+                    <option value="700000">700000點</option>
+                    <option value="800000">800000點</option>
+                    <option value="900000">900000點</option>
+                    <option value="1000000">1000000點</option>
+                    <option value="1250000">1250000點</option>
+                    <option value="1500000">1500000點</option>
+                    <option value="1750000">1750000點</option>
+                    <option value="2000000">2000000點</option>
+                    <option value="2500000">2500000點</option>
+                    <option value="3000000">3000000點</option>
+                    <option value="3500000">3500000點</option>
+                    <option value="4000000">4000000點</option>
+                    <option value="4500000">4500000點</option>
+                    <option value="5000000">5000000點</option>
+                  </select>
+                  以上的用戶
+                </label>
               </div>
             </div>
           </div>
