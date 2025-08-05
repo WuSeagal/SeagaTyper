@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<ChatProps>(), defaultChatProps)
 
 // 輸出參數的函數
 function logProps() {
-  console.log('ChatDisplay 參數：', {
+  console.log('設定參數：', {
     '頻道': props.channel,
     '打字速度': props.typingSpeed + 'ms',
     '字體大小': props.fontSize + 'px',

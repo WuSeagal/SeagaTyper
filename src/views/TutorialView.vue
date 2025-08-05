@@ -3,12 +3,12 @@
     <div class="login-layout">
       <h1>SeagaTyper 使用教學</h1>
       <div class="description-container">
-        <p>這個頁面將一步一步教您如何填寫表單來產生您想要的效果。</p>
-        <p>跟著以下步驟操作，您將能夠輕鬆設置並使用 SeagaTyper 來展示您的 Twitch 聊天室內容。</p>
+        <p>本頁面將帶您操作SeagaTyper的各個設定怎麼調整，以及設定完後怎麼在OBS瀏覽器來源進行使用。</p>
+        <p>跟著以下步驟操作，您將能夠輕鬆自訂設定使用SeagaTyper打造屬於你的Twitch聊天室單行顯示效果。</p>
       </div>
 
       <div class="form-container">
-        <button class="return-main-button primary-button" @click="goToMainPage">返回主頁面</button>
+        <a href="/" class="return-main-button primary-button">返回主頁面</a>
         <!-- 步驟 1 -->
         <div class="fancy-card-wrapper">
           <div class="fancy-title">
@@ -62,7 +62,7 @@
             步驟四 調整顯示文字的設定
           </div>
           <div class="fancy-card">
-            <p>根據喜好設定文字大小、文字顏色與粗細程度，目前字型僅支援俐方體11號。</p>
+            <p>根據喜好設定字型、文字大小、文字顏色與粗細程度。請注意部分字型如例方體11號、饅頭黑體並無粗細之分。</p>
           </div>
         </div>
         
@@ -80,7 +80,7 @@
           </div>
         </div>
 
-        <button class="return-main-button primary-button" @click="goToMainPage">返回主頁面</button>
+        <a href="/" class="return-main-button primary-button">返回主頁面</a>
       </div>
       
       <div class="copyright">

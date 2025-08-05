@@ -3,17 +3,17 @@
     <div class="login-layout">
       <h1>SeagaTyper</h1>
       <div class="description-container">
-        <p>這是一個for實況直播用顯示單行Twitch聊天室內容的瀏覽器來源產生器。</p>
-        <p>舊稱：Twitch NPC對話聊天室展示器</p>
-        <p>輸入Twitch頻道帳號並且調整設定，就能客製篩選接收的發言者&顯示樣式。</p>
-        <p>能夠一字一字像打字般呈現，並且只針對特定身分的聊天室發言進行呈現是本工具的特點。</p>
+        <p>SeagaTyper是一個幫助實況主的Twitch聊天室單行式顯示工具，可以產生Twitch聊天室內容進行單行顯示的網址套用在OBS瀏覽器來源。</p>
+        <p>針對Twitch聊天室內容進行打字式單行顯示、指定特定觀眾身分觀眾篩選呈現對話是SeagaTyper的特色。</p>
+        <p>如果使用上有任何建議或疑難，都可以透過以下方式與我設法聯繫：</p>
         <p>
-          有任何建議或疑難，都可以透過信箱<a href="mailto:seagal.wu@seagalogs.com">seagal.wu@seagalogs.com</a>
-          或<a href="https://seagalogs.com/" target="_blank">我的部落格-蜥嘎絡格室</a>來聯絡我。
+          信箱<a href="mailto:seagal.wu@seagalogs.com">seagal.wu@seagalogs.com</a> 或 部落格<a href="https://seagalogs.com/about" target="_blank">關於我</a>
         </p>
-        <p>本專案為開源開發中項目，尚未完工，歡迎貢獻或提供建議LUL (<a href="https://github.com/WuSeagal/Twitch-NPC-Talk-Displayer" target="_blank">可以參考GITHUB</a>)</p>
+        <p>
+          本工具為開源專案，歡迎不吝指教。 --<a href="https://github.com/WuSeagal/SeagaTyper" target="_blank">SeagaTyper GitHub連結</a>
+        </p>
       </div>
-      <button class="primary-button" @click="goToTutorial">查看使用教學</button>
+      <a href="/tutorial" class="primary-button">查看使用教學</a>
       <div class="form-container">
         <!-- 頻道資訊 -->
         <div class="fancy-card-wrapper">

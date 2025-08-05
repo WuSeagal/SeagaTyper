@@ -148,6 +148,12 @@ button:focus-visible {
   margin: 20px;
 }
 
+.description-container p {
+  margin: 6px 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
@@ -346,6 +352,6 @@ button:focus-visible {
   position: relative;
 }
 
-return-main-button {
-  margin: 20px;
+.return-main-button {
+  margin: 10px;
 }
