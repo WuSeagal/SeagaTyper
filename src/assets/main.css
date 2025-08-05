@@ -57,11 +57,11 @@ body {
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #4f5bd5;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #434190;
 }
 
 input,
@@ -100,7 +100,7 @@ button + button {
   margin-top: 0;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #4f5bd5;
 }
 button:focus,
 button:focus-visible {
@@ -328,7 +328,7 @@ input[type="number"] {
   font-size: 1.1em;
   font-weight: bold;
   padding: 8px 16px;
-  background-color: #646cff;
+  background-color: #4f5bd5;
   color: white;
   border-radius: 4px;
   text-decoration: none;
@@ -338,7 +338,7 @@ input[type="number"] {
 }
 
 .primary-button:hover {
-  background-color: #535bf2;
+  background-color: #434190;
   color: white;
 }
 
@@ -349,7 +349,7 @@ input[type="number"] {
   font-weight: bold;
   margin-top: 10px;
   padding: 8px 16px;
-  background-color: #646cff;
+  background-color: #4f5bd5;
   color: white;
   border-radius: 4px;
   text-decoration: none;
@@ -357,7 +357,7 @@ input[type="number"] {
 }
 
 .tutorial-link:hover {
-  background-color: #535bf2;
+  background-color: #434190;
   color: white;
 }
 
