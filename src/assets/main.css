@@ -150,6 +150,7 @@ button:focus-visible {
 
 .description-container {
   margin: 20px;
+  text-align: left;
 }
 
 .description-container p {
@@ -290,13 +291,9 @@ input[type="number"] {
 }
 
 .chat-text-content {
-  /* 字體大小 */
   font-size: 12px;
-  /* 字體顏色 */
   color: black;
-  /* 是否粗體 */
   font-weight: 400;
-  /* 字體-預設立方體11號(OBS來做) */
 }
 
 .copyright {
@@ -322,7 +319,6 @@ input[type="number"] {
   }
 }
 
-/* Primary button styles - used for important actions */
 .primary-button {
   display: inline-block;
   font-size: 1.1em;
@@ -342,7 +338,6 @@ input[type="number"] {
   color: white;
 }
 
-/* Tutorial link styles */
 .tutorial-link {
   display: inline-block;
   font-size: 1.1em;
@@ -361,7 +356,6 @@ input[type="number"] {
   color: white;
 }
 
-/* Tutorial image placeholder styles */
 .tutorial-image-placeholder {
   background-color: #f0f0f0;
   border: 1px dashed #ccc;
@@ -391,4 +385,9 @@ input[type="number"] {
 
 .return-main-button {
   margin: 10px;
+}
+
+.note-block {
+  text-align: left;
+  color: #666666;
 }

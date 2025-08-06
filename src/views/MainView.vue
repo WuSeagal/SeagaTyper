@@ -7,7 +7,7 @@
         <p>針對Twitch聊天室內容進行打字式單行顯示、指定特定觀眾身分觀眾篩選呈現對話是SeagaTyper的特色。</p>
         <p>如果使用上有任何建議或疑難，都可以透過以下方式與我設法聯繫：</p>
         <p>
-          信箱<a href="mailto:seagal.wu@seagalogs.com">seagal.wu@seagalogs.com</a> 或 部落格<a href="https://seagalogs.com/about" target="_blank">關於我</a>
+          信箱 <a href="mailto:seagal.wu@seagalogs.com">seagal.wu@seagalogs.com</a> 或 部落格 <a href="https://seagalogs.com/about" target="_blank">關於我</a>
         </p>
         <p>
           本工具為開源專案，歡迎不吝指教。 --<a href="https://github.com/WuSeagal/SeagaTyper" target="_blank">SeagaTyper GitHub連結</a>
@@ -64,7 +64,7 @@
                 />
               </div>
               <div class="form-group">
-                <label>身份/徽章篩選</label>
+                <label>身份徽章篩選</label>
                 <div class="roles-flex">
                   <label><input type="checkbox" v-model="displayRoles" :value="1" :disabled="!isLimitDisplay" /> 頻道擁有者</label>
                   <label><input type="checkbox" v-model="displayRoles" :value="2" :disabled="!isLimitDisplay" /> Mod(大劍)</label>
@@ -97,7 +97,7 @@
               <div class="form-group">
                 <label>
                   <input type="checkbox" v-model="displayBits" :disabled="!isLimitDisplay" />
-                  顯示獎勵小奇點
+                  顯示佩帶小奇點徽章
                 </label>
                 <label>
                   <select
@@ -136,6 +136,9 @@
                   </select>
                   以上的用戶
                 </label>
+              </div>
+              <div class="note-block">
+                <p><strong>重要：</strong> 層級2訂閱、層級3訂閱、VIP、創建者、小奇點點數，以上幾個都需要觀眾現在正在佩帶對應的徽章才會視為該身分。</p>
               </div>
             </div>
           </div>
