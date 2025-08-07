@@ -337,6 +337,8 @@ import FooterAds from '@/components/FooterAds.vue'
 import { decodeConfig, encodeConfig, type DisplayConfig } from '@/utils/configEncoder'
 
 const router = useRouter()
+const STORAGE_KEY = 'seagaTyper_config'
+
 
 function goToTutorial() {
   router.push('/tutorial')
@@ -395,31 +397,63 @@ const cheerBitsLimit = computed<number>({
 onMounted(() => {
   const query = new URLSearchParams(location.search);
   const cfgStr = query.get('config')
+
+  let config: DisplayConfig | null = null
+
   if (cfgStr) {
-    const config = decodeConfig(cfgStr)
-    if (config) {
-      channel.value = config.c || ''
-      typingSpeed.value = config.ts || 50
-      fontSize.value = config.fs || 12
-      fontColor.value = config.fc || '#000000'
-      fontWeight.value = config.fw || 'normal'
-      fontFamily.value = config.ff || "'Cubic 11', sans-serif"
-      showName.value = config.sn ?? true
-      messageLineDuration.value = config.mld || 5
-      messageDuration.value = config.md || 10
-      lastMessageDuration.value = config.lmd || 0
-      maxMessageAwait.value = config.mma || 5
-      isLimitDisplay.value = config.ild ?? false
-      whiteList.value = config.wl || []
-      blackList.value = config.bl || []
-      displayRoles.value = config.dr || []
-      displaySubs.value = config.ds ?? false
-      subMonthsLimit.value = config.sml || 0
-      displayBits.value = config.db ?? false
-      cheerBitsLimit.value = config.cbl || 0
+    config = decodeConfig(cfgStr)
+    console.log('從URL中載入config配置...')
+  } else {
+    try {
+      const savedConfig = localStorage.getItem(STORAGE_KEY)
+      if (savedConfig) {
+        config = JSON.parse(savedConfig)
+        console.log('從紀錄中載入config配置...')
+      }
+    } catch (e) {
+      console.warn('載入紀錄中config配置失敗:', e)
     }
-  };
+  }
+
+  if (config) {
+    applyConfig(config)
+  }
 })
+
+function applyConfig(config: DisplayConfig) {
+  channel.value = config.c || ''
+  typingSpeed.value = config.ts || 50
+  fontSize.value = config.fs || 12
+  fontColor.value = config.fc || '#000000'
+  fontWeight.value = config.fw || 'normal'
+  fontFamily.value = config.ff || "'Cubic 11', sans-serif"
+  showName.value = config.sn ?? true
+  messageLineDuration.value = config.mld || 5
+  messageDuration.value = config.md || 10
+  lastMessageDuration.value = config.lmd || 0
+  maxMessageAwait.value = config.mma || 5
+  isLimitDisplay.value = config.ild ?? false
+  whiteList.value = config.wl || []
+  blackList.value = config.bl || []
+  displayRoles.value = config.dr || []
+  displaySubs.value = config.ds ?? false
+  subMonthsLimit.value = config.sml || 0
+  displayBits.value = config.db ?? false
+  cheerBitsLimit.value = config.cbl || 1
+  blacklistInput.value = blackList.value.join(', ')
+  whitelistInput.value = whiteList.value.join(', ')
+  cheerBitsLimitInput.value = String(config.cbl || 1)
+}
+
+function saveConfigToStorage(config: DisplayConfig) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(config))
+    console.log('配置已儲存到瀏覽器紀錄')
+  } catch (e) {
+    console.warn('儲存配置到瀏覽器紀錄失敗:', e)
+  }
+}
+
 
 function copyUrl() {
   const config: DisplayConfig = {
@@ -443,6 +477,8 @@ function copyUrl() {
     db: displayBits.value,
     cbl: cheerBitsLimit.value,
   }
+
+  saveConfigToStorage(config)
 
   const configStr = encodeConfig(config)
   const url = `${import.meta.env.VITE_DOMAIN}${import.meta.env.VITE_BASE_URL}display?config=${configStr}`
