@@ -4,6 +4,7 @@ export const defaultChatProps = {
   fontColor: '#000000',
   fontWeight: 'normal',
   fontFamily: "'Cubic 11', sans-serif",
+  textWrapMode: 'nowrap',
   messageLineDuration: 5,
   messageDuration: 10,
   maxMessageAwait: 5,

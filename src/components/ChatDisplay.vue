@@ -24,6 +24,7 @@ function logProps() {
     '字體顏色': props.fontColor,
     '字體': props.fontFamily,
     '字體粗細': props.fontWeight,
+    '多行顯示': props.textWrapMode === 'nowrap' ? '單行' : '換行',
     '每行間隔': props.messageLineDuration + '秒',
     '訊息間隔': props.messageDuration + '秒',
     '最多保留訊息數': props.maxMessageAwait,
@@ -75,7 +76,8 @@ const fontStyle = computed(() => ({
   fontSize: `${props.fontSize}px`,
   color: props.fontColor,
   fontWeight: props.fontWeight,
-  fontFamily: props.fontFamily
+  fontFamily: props.fontFamily,
+  whiteSpace: props.textWrapMode,
 }))
 
 watch(() => props.channel, (newChannel) => {
@@ -231,7 +233,7 @@ function startTypingEffect(onFinish?: () => void) {
 
     // 檢查是否 overflow
     const willOverflow = container.scrollWidth > container.clientWidth
-    if (willOverflow) {
+    if (willOverflow && props.textWrapMode == 'nowrap') {
       isWaitingBeforeNewLine = true
 
       setTimeout(() => {

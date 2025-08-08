@@ -176,7 +176,17 @@
               </div>
               <div class="form-group">
                 <label>
-                  🦎 同訊息每行顯示間隔時間：
+                  🦎 單行/多行訊息顯示：
+                  <br />
+                  <select v-model="textWrapMode">
+                    <option value="nowrap">單行(不換行)</option>
+                    <option value="normal">多行(換行)</option>
+                  </select>
+                </label>
+              </div>
+              <div class="form-group" v-if="textWrapMode === 'nowrap'">
+                <label>
+                  🦎 單行模式每行顯示間隔：
                   <br />
                   <input
                       type="number"
@@ -302,6 +312,7 @@
         :fontWeight="fontWeight"
         :fontFamily="fontFamily"
         :messageDuration="messageDuration"
+        :textWrapMode="textWrapMode"
         :messageLineDuration="messageLineDuration"
         :lastMessageDuration="lastMessageDuration"
         :maxMessageAwait="maxMessageAwait"
@@ -351,6 +362,7 @@ const fontSize = ref(12);
 const fontColor = ref('#000000')
 const fontWeight = ref('normal')
 const fontFamily = ref("'Cubic 11', sans-serif")
+const textWrapMode = ref('nowrap');
 const messageLineDuration = ref(5);
 const messageDuration = ref(10);
 const maxMessageAwait = ref(5);
@@ -428,6 +440,7 @@ function applyConfig(config: DisplayConfig) {
   fontWeight.value = config.fw || 'normal'
   fontFamily.value = config.ff || "'Cubic 11', sans-serif"
   showName.value = config.sn ?? true
+  textWrapMode.value = config.twm || 'nowrap'
   messageLineDuration.value = config.mld || 5
   messageDuration.value = config.md || 10
   lastMessageDuration.value = config.lmd || 0
@@ -464,6 +477,7 @@ function copyUrl() {
     ff: fontFamily.value,
     fw: fontWeight.value,
     sn: showName.value,
+    twm: textWrapMode.value,
     mld: messageLineDuration.value,
     md: messageDuration.value,
     lmd: lastMessageDuration.value,

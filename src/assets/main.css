@@ -265,7 +265,7 @@ input[type="number"] {
 .chat-line {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   white-space: nowrap;
   width: 100%;
   overflow: hidden;
@@ -288,6 +288,7 @@ input[type="number"] {
   padding: 0;
   background-color: transparent;
   flex-grow: 1;
+  word-break: break-all;
 }
 
 .chat-text-content {

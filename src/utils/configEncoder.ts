@@ -18,6 +18,7 @@ export interface DisplayConfig {
   sml?: number          // subMonthsLimit
   db?: boolean          // displayBits
   cbl?: number          // cheerBitsLimit
+  twm?: string          // textWrapMode
 }
 
 export function toUrlSafeBase64(base64: string): string {

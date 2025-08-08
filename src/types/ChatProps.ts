@@ -5,6 +5,7 @@ export type ChatProps = {
   fontColor?: string
   fontWeight?: string
   fontFamily?: string
+  textWrapMode?: string
   messageLineDuration?: number
   messageDuration?: number
   maxMessageAwait?: number
