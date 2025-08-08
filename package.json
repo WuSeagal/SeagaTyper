@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build-early-prd": "vue-tsc -b && vite build --mode early-prd",
+    "build-early-test": "vue-tsc -b && vite build --mode early-test",
+    "build-pbtest": "vue-tsc -b && vite build --mode pbtest"
   },
   "dependencies": {
     "pug": "^3.0.3",
