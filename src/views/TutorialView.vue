@@ -93,7 +93,7 @@
 
         <a href="/" class="return-main-button primary-button">返回主頁面</a>
       </div>
-      
+      <FooterAds />
       <div class="copyright">
         Copyright © 2025 Seagalogs. 
         <br />
@@ -105,6 +105,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import FooterAds from "@/components/FooterAds.vue";
 
 const router = useRouter()
 
