@@ -5,7 +5,7 @@ SeagaTyper是一個幫助實況主的Twitch聊天室單行式顯示工具，可�
 
 ## DEMO AND 使用方式
 
-目前部署在 [https://twitch-npc-talk-displayer.seagalogs.com](https://seagatyper.seagalogs.com/) 上面，歡迎直接使用。
+目前部署在 [https://seagatyper.seagalogs.com/](https://seagatyper.seagalogs.com/) 上面，歡迎直接使用。
 
 ## 使用套件
 * vue3 + vite
